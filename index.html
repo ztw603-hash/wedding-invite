@@ -147,7 +147,7 @@
     .paper-3d.unfolded .invitation-full {
       opacity: 1;
     }
-    /* ВЕРХНЕЕ ФОТО */
+    /* ВЕРХНЕЕ ФОТО (десктоп) */
     .top-photo {
       text-align: center;
       margin-bottom: 30px;
@@ -192,7 +192,6 @@
       font-weight: 500;
       margin-bottom: 2rem;
     }
-    /* Текст-обращение — Karla для единообразия */
     .invitation-text {
       font-family: 'Karla', sans-serif;
       font-size: 1.2rem;
@@ -210,7 +209,6 @@
     .invitation-text p {
       margin-bottom: 0.5rem;
     }
-    /* Персональное обращение — акцентный шрифт */
     .personal-greeting {
       font-family: 'Playfair Display', serif;
       font-size: 1.3rem;
@@ -224,7 +222,6 @@
       letter-spacing: 0.5px;
       background: #fefefe;
     }
-    /* Приглашающий текст — Karla */
     .invite-message {
       font-family: 'Karla', sans-serif;
       font-size: 1.15rem;
@@ -487,7 +484,7 @@
       background: #3a3a3a;
       transform: scale(1.02);
     }
-    /* Медиа-запросы: исправленное отображение верхнего фото на мобильных */
+    /* Медиа-запросы: исправленное отображение верхнего фото на мобильных — без отступов */
     @media (max-width: 768px) {
       .names-layout { gap: 25px; }
       .names-photo img { width: 180px; }
@@ -497,9 +494,24 @@
       .timer-number { font-size: 2rem; }
       .timer-block { min-width: 60px; }
       .music-control { padding: 8px 16px; font-size: 0.8rem; bottom: 15px; right: 15px; }
-      /* Фото на весь экран */
-      .top-photo { padding: 0; margin-bottom: 20px; }
-      .top-photo img { max-height: 90vh; width: 100%; height: auto; object-fit: contain; border-radius: 0; }
+      
+      /* Убираем все отступы у верхнего фото */
+      .top-photo {
+        padding: 0;
+        margin: 0;
+        width: 100%;
+      }
+      .top-photo img {
+        width: 100%;
+        height: auto;
+        max-height: none;
+        border-radius: 0;
+        object-fit: cover;
+        display: block;
+        box-shadow: none;
+        border: none;
+      }
+      
       .invitation-text { font-size: 1rem; padding: 1rem; }
       .invite-message { font-size: 1rem; }
       .personal-greeting { font-size: 1.1rem; }
@@ -509,7 +521,10 @@
       .names-layout { flex-direction: column; }
       .names-left { flex-direction: row; gap: 30px; }
       .invitation-text { font-size: 0.9rem; }
-      .top-photo img { max-height: 92vh; }
+      /* Дополнительно для очень узких экранов */
+      .top-photo img {
+        object-fit: cover;
+      }
     }
   </style>
 </head>
