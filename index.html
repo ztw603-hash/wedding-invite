@@ -18,9 +18,7 @@
       background-size: 24px 24px;
       font-family: 'Karla', sans-serif;
       min-height: 100vh;
-      /* perspective убран отсюда, чтобы не ломал fixed */
     }
-    /* КОНВЕРТ (полноэкранный, строго по центру) */
     .envelope-overlay {
       position: fixed;
       top: 0;
@@ -116,7 +114,6 @@
       padding: 4px 10px;
       border-radius: 30px;
     }
-    /* 3D РАЗВОРАЧИВАЮЩИЙСЯ ЛИСТ (перспектива только для него) */
     .paper-3d {
       position: fixed;
       top: 0;
@@ -131,7 +128,6 @@
       border-radius: 30px;
       box-shadow: 0 20px 40px rgba(0,0,0,0.3);
       transition: transform 1.2s cubic-bezier(0.2, 0.9, 0.3, 1.1), border-radius 0.8s ease, box-shadow 0.8s ease;
-      /* перспектива применяется к самому элементу через transform-style? нет, достаточно */
     }
     .paper-3d.unfolded {
       transform: rotateX(0deg) rotateY(0deg) scale(1);
@@ -148,7 +144,7 @@
     .paper-3d.unfolded .invitation-full {
       opacity: 1;
     }
-    /* Остальные стили приглашения (центрированные) */
+    /* Остальные стили приглашения */
     .container {
       max-width: 1200px;
       margin: 0 auto;
@@ -389,6 +385,26 @@
       opacity: 1;
       transform: translateY(0);
     }
+    /* кнопка для ручного запуска музыки, если автовоспроизведение заблокировано */
+    .music-fallback {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #1a1a1a;
+      color: white;
+      border: none;
+      border-radius: 40px;
+      padding: 10px 20px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      z-index: 4000;
+      font-family: 'Karla', sans-serif;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      display: none;
+    }
+    .music-fallback:hover {
+      background: #3a3a3a;
+    }
     @media (max-width: 768px) {
       .names-layout { gap: 25px; }
       .names-photo img { width: 180px; }
@@ -406,11 +422,14 @@
 </head>
 <body>
 
-<!-- Скрытый аудиоплеер с музыкой -->
+<!-- Аудиоэлемент с музыкой -->
 <audio id="weddingMusic" loop preload="auto">
   <source src="wedding-music.mp3" type="audio/mpeg">
   Ваш браузер не поддерживает аудио.
 </audio>
+
+<!-- Кнопка для ручного включения (появляется только при ошибке автовоспроизведения) -->
+<button id="musicFallbackBtn" class="music-fallback">🎵 Включить музыку</button>
 
 <div class="envelope-overlay" id="envelopeOverlay">
   <div class="envelope" id="envelope">
@@ -551,10 +570,10 @@
     });
   }
 
-  // Функция плавного увеличения громкости до 0.3 за 5 секунд
+  // Плавное увеличение громкости до 0.3 за 5 секунд
   function fadeInMusic(audioElement, targetVolume = 0.3, duration = 5000) {
+    if (!audioElement) return;
     audioElement.volume = 0;
-    audioElement.play().catch(e => console.log("Автовоспроизведение заблокировано, но пользователь кликнул:", e));
     const startTime = performance.now();
     function step(now) {
       const elapsed = now - startTime;
@@ -567,13 +586,45 @@
     requestAnimationFrame(step);
   }
 
+  // Функция запуска музыки с обработкой ошибок
+  function startMusic() {
+    const music = document.getElementById('weddingMusic');
+    if (!music) return;
+    // Сбрасываем громкость на 0 и запускаем
+    music.volume = 0;
+    const playPromise = music.play();
+    if (playPromise !== undefined) {
+      playPromise.then(() => {
+        console.log('Музыка запущена успешно');
+        fadeInMusic(music, 0.3, 5000);
+        // Скрываем кнопку-заглушку, если она видна
+        const fallbackBtn = document.getElementById('musicFallbackBtn');
+        if (fallbackBtn) fallbackBtn.style.display = 'none';
+      }).catch(error => {
+        console.warn('Автовоспроизведение заблокировано:', error);
+        // Показываем кнопку для ручного включения
+        const fallbackBtn = document.getElementById('musicFallbackBtn');
+        if (fallbackBtn) fallbackBtn.style.display = 'block';
+      });
+    }
+  }
+
+  // Обработчик для кнопки-заглушки
+  document.getElementById('musicFallbackBtn').addEventListener('click', () => {
+    const music = document.getElementById('weddingMusic');
+    music.volume = 0;
+    music.play().then(() => {
+      fadeInMusic(music, 0.3, 5000);
+      document.getElementById('musicFallbackBtn').style.display = 'none';
+    }).catch(e => console.log('Ручной запуск не удался', e));
+  });
+
   const envelopeOverlay = document.getElementById('envelopeOverlay');
   const envelope = document.getElementById('envelope');
-  const music = document.getElementById('weddingMusic');
 
   function openEnvelopeAndExpand() {
-    // Запускаем музыку с плавным нарастанием громкости до 0.3 за 5 секунд
-    fadeInMusic(music, 0.3, 5000);
+    // Запускаем музыку при клике на конверт
+    startMusic();
     
     envelope.classList.add('open');
     setTimeout(() => {
@@ -582,7 +633,7 @@
       paper3d.innerHTML = getInvitationHTML(guestName);
       document.body.appendChild(paper3d);
       envelopeOverlay.classList.add('hide');
-      paper3d.offsetHeight; // force reflow
+      paper3d.offsetHeight;
       paper3d.classList.add('unfolded');
       setTimeout(() => {
         const finalContent = paper3d;
