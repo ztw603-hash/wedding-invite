@@ -154,14 +154,15 @@
       padding: 0 20px;
     }
     .top-photo img {
-  width: 110%;           /* вместо max-width: 100% */
-  height: auto;          /* сохраняем пропорции */
-  max-height: none;      /* убираем ограничение высоты */
-  display: block;        /* убирает лишний отступ снизу */
-  border-radius: 0;      /* убираем скругление (опционально) */
-  box-shadow: none;      /* убираем тень (опционально) */
-  border: none;          /* убираем рамку (опционально) */
-}
+      max-width: 100%;
+      max-height: 650px;
+      width: auto;
+      height: auto;
+      border-radius: 24px;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+      object-fit: cover;
+      border: 2px solid #f0f0f0;
+    }
     /* ОСНОВНЫЕ СТИЛИ */
     .container {
       max-width: 1200px;
@@ -483,8 +484,32 @@
       background: #3a3a3a;
       transform: scale(1.02);
     }
-    /* Медиа-запросы: исправленное отображение верхнего фото на мобильных — без отступов */
+    /* Медиа-запросы: исправленное отображение верхнего фото на мобильных — без отступов, на всю ширину */
     @media (max-width: 768px) {
+      /* Убираем горизонтальные отступы у основного контейнера приглашения */
+      .invitation-full {
+        padding-left: 0;
+        padding-right: 0;
+      }
+      /* Убираем отступы у родителя фото */
+      .top-photo {
+        padding: 0;
+        margin: 0;
+        width: 100%;
+      }
+      /* Растягиваем фото на всю ширину экрана */
+      .top-photo img {
+        width: 100%;
+        height: auto;
+        max-width: none;
+        max-height: none;
+        border-radius: 0;
+        box-shadow: none;
+        border: none;
+        display: block;
+        object-fit: cover;
+      }
+      
       .names-layout { gap: 25px; }
       .names-photo img { width: 180px; }
       .initial { font-size: 2rem; }
@@ -493,24 +518,6 @@
       .timer-number { font-size: 2rem; }
       .timer-block { min-width: 60px; }
       .music-control { padding: 8px 16px; font-size: 0.8rem; bottom: 15px; right: 15px; }
-      
-      /* Убираем все отступы у верхнего фото */
-      .top-photo {
-        padding: 0;
-        margin: 0;
-        width: 100%;
-      }
-      .top-photo img {
-        width: 100%;
-        height: auto;
-        max-height: none;
-        border-radius: 0;
-        object-fit: cover;
-        display: block;
-        box-shadow: none;
-        border: none;
-      }
-      
       .invitation-text { font-size: 1rem; padding: 1rem; }
       .invite-message { font-size: 1rem; }
       .personal-greeting { font-size: 1.1rem; }
@@ -520,10 +527,6 @@
       .names-layout { flex-direction: column; }
       .names-left { flex-direction: row; gap: 30px; }
       .invitation-text { font-size: 0.9rem; }
-      /* Дополнительно для очень узких экранов */
-      .top-photo img {
-        object-fit: cover;
-      }
     }
   </style>
 </head>
