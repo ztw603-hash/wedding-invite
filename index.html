@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+  <!-- Запрещаем режим web-app (добавление на рабочий стол) -->
+  <meta name="apple-mobile-web-app-capable" content="no">
+  <meta name="mobile-web-app-capable" content="no">
   <title>Свадебное приглашение | Ангелина & Яков</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Karla:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -19,7 +22,46 @@
       font-family: 'Karla', sans-serif;
       min-height: 100vh;
     }
-    /* КОНВЕРТ (полноэкранный) */
+    /* Стили для сообщения о запрете standalone-режима */
+    .standalone-warning {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #ffffff;
+      z-index: 5000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 30px;
+      font-family: 'Karla', sans-serif;
+      color: #1a1a1a;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .standalone-warning h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+    }
+    .standalone-warning p {
+      font-size: 1rem;
+      max-width: 300px;
+      margin: 0 auto;
+    }
+    .standalone-warning button {
+      background: #1a1a1a;
+      color: white;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 40px;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+    /* остальные стили как раньше */
     .envelope-overlay {
       position: fixed;
       top: 0;
@@ -115,7 +157,6 @@
       padding: 4px 10px;
       border-radius: 30px;
     }
-    /* 3D РАЗВОРАЧИВАЮЩИЙСЯ ЛИСТ */
     .paper-3d {
       position: fixed;
       top: 0;
@@ -146,7 +187,6 @@
     .paper-3d.unfolded .invitation-full {
       opacity: 1;
     }
-    /* Остальные стили приглашения */
     .container {
       max-width: 1200px;
       margin: 0 auto;
@@ -387,7 +427,6 @@
       opacity: 1;
       transform: translateY(0);
     }
-    /* Кнопка включения музыки (всегда видна после открытия конверта) */
     .music-control {
       position: fixed;
       bottom: 25px;
@@ -443,7 +482,7 @@
   Ваш браузер не поддерживает аудио.
 </audio>
 
-<!-- Кнопка для включения музыки (появляется после открытия конверта) -->
+<!-- Кнопка включения музыки -->
 <button id="musicControlBtn" class="music-control">
   <i class="fas fa-music"></i> Включить музыку
 </button>
@@ -458,7 +497,63 @@
 </div>
 
 <script>
-  // Получение имени гостя из URL
+  // ========== 1. ЗАПРЕТ ОТКРЫТИЯ В STANDALONE (PWA) НА IOS ==========
+  function preventStandaloneMode() {
+    // Проверяем, открыто ли приложение в режиме "на рабочем столе" (iOS)
+    const isInStandalone = window.navigator.standalone === true;
+    // Также можно проверить по user-agent, но основной признак — standalone
+    if (isInStandalone) {
+      // Показываем специальное сообщение и блокируем весь контент
+      const warningDiv = document.createElement('div');
+      warningDiv.className = 'standalone-warning';
+      warningDiv.innerHTML = `
+        <h2>📱 Пожалуйста, откройте в браузере</h2>
+        <p>Это приложение не работает в режиме «одной страницы». Используйте Safari, Chrome или другой браузер.</p>
+        <button id="openInSafariBtn">Открыть в Safari</button>
+        <p style="font-size:0.8rem; margin-top:20px;">Нажмите на кнопку, и ссылка откроется в браузере по умолчанию.</p>
+      `;
+      document.body.innerHTML = ''; // очищаем всё
+      document.body.appendChild(warningDiv);
+      
+      // Попытка перенаправить на ту же страницу, но с принудительным открытием в Safari
+      const currentUrl = window.location.href;
+      const openBtn = document.getElementById('openInSafariBtn');
+      if (openBtn) {
+        openBtn.addEventListener('click', () => {
+          // Для iOS можно использовать специальную схему, но проще показать инструкцию или скопировать ссылку
+          // Пытаемся открыть через window.location, но если уже в standalone, то это не сработает.
+          // Поэтому предлагаем пользователю скопировать ссылку и вставить в Safari.
+          // Более надёжно: показать инструкцию.
+          warningDiv.innerHTML = `
+            <h2>📋 Скопируйте ссылку</h2>
+            <p style="background:#f0f0f0; padding:10px; border-radius:12px; word-break:break-all;">${currentUrl}</p>
+            <button id="copyLinkBtn">Скопировать ссылку</button>
+            <p style="margin-top:15px;">Откройте Safari, вставьте ссылку и перейдите по ней.</p>
+          `;
+          const copyBtn = document.getElementById('copyLinkBtn');
+          if (copyBtn) {
+            copyBtn.addEventListener('click', () => {
+              navigator.clipboard.writeText(currentUrl).then(() => {
+                alert('Ссылка скопирована! Откройте Safari и вставьте её в адресную строку.');
+              }).catch(() => {
+                alert('Не удалось скопировать ссылку. Пожалуйста, скопируйте её вручную.');
+              });
+            });
+          }
+        });
+      }
+      return true; // сообщаем, что режим заблокирован
+    }
+    return false;
+  }
+  
+  // Запускаем проверку сразу, до любого другого кода
+  if (preventStandaloneMode()) {
+    // Если сайт открыт в standalone, дальнейший скрипт не выполняется
+    throw new Error("Standalone mode blocked");
+  }
+  
+  // ========== 2. ОСТАЛЬНОЙ ФУНКЦИОНАЛ ==========
   function getGuestNameFromURL() {
     const params = new URLSearchParams(window.location.search);
     let guest = params.get('guest');
@@ -467,7 +562,6 @@
   }
   const guestName = getGuestNameFromURL();
 
-  // Генерация HTML приглашения
   function getInvitationHTML(guestName) {
     const greetingText = guestName ? `Уважаемый(ая) ${guestName}!` : `Уважаемые гости!`;
     return `
@@ -506,7 +600,6 @@
     `;
   }
 
-  // Инициализация динамики (таймер, форма, анимации)
   function initDynamicFeatures(guestName) {
     const targetDate = new Date("August 7, 2026 17:00:00").getTime();
     function updateTimer() {
@@ -590,7 +683,6 @@
     });
   }
 
-  // Плавное увеличение громкости до 0.3 за 5 секунд
   function fadeInMusic(audioElement, targetVolume = 0.3, duration = 5000) {
     if (!audioElement) return;
     audioElement.volume = 0;
@@ -606,25 +698,18 @@
     requestAnimationFrame(step);
   }
 
-  // Запуск музыки (вызывается по кнопке)
   function startMusic() {
     const music = document.getElementById('weddingMusic');
     if (!music) return;
-    // Если музыка уже играет, не перезапускаем
     if (!music.paused) return;
     music.volume = 0;
     music.play().then(() => {
       fadeInMusic(music, 0.3, 5000);
-      // После успешного запуска можно скрыть кнопку (или оставить для изменения громкости, но пока скроем)
       const btn = document.getElementById('musicControlBtn');
       if (btn) btn.classList.remove('show');
-    }).catch(e => {
-      console.warn('Не удалось запустить музыку:', e);
-      // Кнопка уже видна, ничего не делаем
-    });
+    }).catch(e => console.warn('Музыка не запустилась:', e));
   }
 
-  // Открытие конверта и разворачивание листа
   const envelopeOverlay = document.getElementById('envelopeOverlay');
   const envelope = document.getElementById('envelope');
   const musicControlBtn = document.getElementById('musicControlBtn');
@@ -655,16 +740,12 @@
         if (invFull) invFull.style.opacity = '1';
         envelopeOverlay.remove();
         initDynamicFeatures(guestName);
-        
-        // ПОСЛЕ ОТКРЫТИЯ КОНВЕРТА ПОКАЗЫВАЕМ КНОПКУ МУЗЫКИ
         musicControlBtn.classList.add('show');
       }, 1300);
     }, 400);
   }
 
   envelope.addEventListener('click', openEnvelopeAndExpand);
-  
-  // Назначение обработчика на кнопку музыки
   musicControlBtn.addEventListener('click', startMusic);
 </script>
 </body>
