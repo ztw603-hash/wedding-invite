@@ -18,9 +18,9 @@
       background-size: 24px 24px;
       font-family: 'Karla', sans-serif;
       min-height: 100vh;
-      perspective: 1200px;
+      /* perspective убран отсюда, чтобы не ломал fixed */
     }
-    /* КОНВЕРТ (полноэкранный) */
+    /* КОНВЕРТ (полноэкранный, строго по центру) */
     .envelope-overlay {
       position: fixed;
       top: 0;
@@ -49,7 +49,9 @@
       cursor: pointer;
       transition: transform 0.2s;
     }
-    .envelope:hover { transform: scale(1.02); }
+    .envelope:hover {
+      transform: scale(1.02);
+    }
     .envelope-flap {
       position: absolute;
       top: 0;
@@ -63,7 +65,9 @@
       transform-origin: top;
       z-index: 5;
     }
-    .envelope.open .envelope-flap { transform: rotateX(180deg); }
+    .envelope.open .envelope-flap {
+      transform: rotateX(180deg);
+    }
     .envelope:before {
       content: '';
       position: absolute;
@@ -93,7 +97,8 @@
       z-index: 3;
       background: linear-gradient(135deg, #fffef7 0%, #fcf5ea 100%);
     }
-    .folded-paper-inside:before, .folded-paper-inside:after {
+    .folded-paper-inside:before,
+    .folded-paper-inside:after {
       content: '';
       position: absolute;
       left: 8%;
@@ -111,7 +116,7 @@
       padding: 4px 10px;
       border-radius: 30px;
     }
-    /* 3D РАЗВОРАЧИВАЮЩИЙСЯ ЛИСТ (сложен дважды) */
+    /* 3D РАЗВОРАЧИВАЮЩИЙСЯ ЛИСТ (перспектива только для него) */
     .paper-3d {
       position: fixed;
       top: 0;
@@ -126,6 +131,7 @@
       border-radius: 30px;
       box-shadow: 0 20px 40px rgba(0,0,0,0.3);
       transition: transform 1.2s cubic-bezier(0.2, 0.9, 0.3, 1.1), border-radius 0.8s ease, box-shadow 0.8s ease;
+      /* перспектива применяется к самому элементу через transform-style? нет, достаточно */
     }
     .paper-3d.unfolded {
       transform: rotateX(0deg) rotateY(0deg) scale(1);
@@ -142,8 +148,12 @@
     .paper-3d.unfolded .invitation-full {
       opacity: 1;
     }
-    /* Остальные стили приглашения (центрированные, ч/б) */
-    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    /* Остальные стили приглашения (центрированные) */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
     .hero {
       min-height: 100vh;
       display: flex;
@@ -153,7 +163,11 @@
       background: transparent;
       padding: 40px 20px;
     }
-    .invitation-card { max-width: 1000px; width: 100%; margin: 0 auto; }
+    .invitation-card {
+      max-width: 1000px;
+      width: 100%;
+      margin: 0 auto;
+    }
     .invitation-title {
       font-family: 'Karla', sans-serif;
       font-size: 0.9rem;
@@ -187,7 +201,11 @@
     .initial-wrapper.bottom-line .initial { order: 1; }
     .initial-wrapper.top-line .initial-line { order: 1; }
     .initial-wrapper.top-line .initial { order: 2; }
-    .initial-line { width: 55px; height: 2px; background-color: #1a1a1a; }
+    .initial-line {
+      width: 55px;
+      height: 2px;
+      background-color: #1a1a1a;
+    }
     .initial {
       font-family: 'Playfair Display', serif;
       font-size: 2.8rem;
@@ -388,6 +406,12 @@
 </head>
 <body>
 
+<!-- Скрытый аудиоплеер с музыкой -->
+<audio id="weddingMusic" loop preload="auto">
+  <source src="wedding-music.mp3" type="audio/mpeg">
+  Ваш браузер не поддерживает аудио.
+</audio>
+
 <div class="envelope-overlay" id="envelopeOverlay">
   <div class="envelope" id="envelope">
     <div class="envelope-flap"></div>
@@ -419,7 +443,7 @@
                 <div class="names-text"><div>АНГЕЛИНА</div><div>&</div><div>ЯКОВ</div></div>
                 <div class="initial-wrapper top-line"><div class="initial-line"></div><div class="initial">Ж</div></div>
               </div>
-              <div class="names-photo"><img src="photo.jpg" alt="Ангелина и Яков"></div>
+              <div class="names-photo"><img src="photo.jpg" alt="Ангелина и Яков" onerror="this.src='https://placehold.co/400x400/f0f0f0/8a8a8a?text=❤️'"></div>
             </div>
             <div class="hero-date">07 АВГУСТА 2026</div>
             <div class="hero-welcome">ЖДЁМ ВАС</div>
@@ -527,10 +551,30 @@
     });
   }
 
+  // Функция плавного увеличения громкости до 0.3 за 5 секунд
+  function fadeInMusic(audioElement, targetVolume = 0.3, duration = 5000) {
+    audioElement.volume = 0;
+    audioElement.play().catch(e => console.log("Автовоспроизведение заблокировано, но пользователь кликнул:", e));
+    const startTime = performance.now();
+    function step(now) {
+      const elapsed = now - startTime;
+      const progress = Math.min(1, elapsed / duration);
+      audioElement.volume = progress * targetVolume;
+      if (progress < 1) {
+        requestAnimationFrame(step);
+      }
+    }
+    requestAnimationFrame(step);
+  }
+
   const envelopeOverlay = document.getElementById('envelopeOverlay');
   const envelope = document.getElementById('envelope');
+  const music = document.getElementById('weddingMusic');
 
   function openEnvelopeAndExpand() {
+    // Запускаем музыку с плавным нарастанием громкости до 0.3 за 5 секунд
+    fadeInMusic(music, 0.3, 5000);
+    
     envelope.classList.add('open');
     setTimeout(() => {
       const paper3d = document.createElement('div');
@@ -538,10 +582,9 @@
       paper3d.innerHTML = getInvitationHTML(guestName);
       document.body.appendChild(paper3d);
       envelopeOverlay.classList.add('hide');
-      paper3d.offsetHeight;
+      paper3d.offsetHeight; // force reflow
       paper3d.classList.add('unfolded');
       setTimeout(() => {
-        // После анимации: удаляем классы, но оставляем контент видимым
         const finalContent = paper3d;
         finalContent.style.transition = 'none';
         finalContent.classList.remove('paper-3d', 'unfolded');
@@ -549,11 +592,10 @@
         finalContent.style.borderRadius = '0';
         finalContent.style.boxShadow = 'none';
         finalContent.style.position = 'relative';
-        finalContent.style.background = '#fffef7';   // сохраняем белый фон
+        finalContent.style.background = '#fffef7';
         finalContent.style.zIndex = 'auto';
         finalContent.style.overflow = 'visible';
         finalContent.id = 'finalInvitation';
-        // Принудительно показываем содержимое (на случай, если opacity не сбросился)
         const invFull = finalContent.querySelector('.invitation-full');
         if (invFull) invFull.style.opacity = '1';
         envelopeOverlay.remove();
