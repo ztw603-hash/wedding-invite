@@ -1,599 +1,426 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
-  <title>Приглашение на свадьбу | Ангелина & Яков</title>
-  <!-- Простые шрифты: для имён — элегантный сериф, для таймера — чёткий гротеск -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+/* ЧЁРНО-БЕЛАЯ ПАЛИТРА */
+body {
+  background-color: #fafafa;
+  color: #1e1e1e;
+  font-family: 'Inter', sans-serif;
+  line-height: 1.4;
+  scroll-behavior: smooth;
+}
 
-    body {
-      background: #ffffff;
-      color: #000000;
-      font-family: 'Inter', sans-serif;
-      line-height: 1.3;
-    }
+h1, h2, h3, .invitation-title, .couple-names, .timer-label, .hero-sub, .section-title {
+  font-family: 'Cormorant Garamond', serif;
+}
 
-    /* Полное центрирование всех блоков */
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 20px;
-    }
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  width: 100%;
+}
 
-    /* Главный экран — в точности как на фото */
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      background: #ffffff;
-      padding: 40px 20px;
-    }
+/* Hero Section – монохромная элегантность, центрирование */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: #ffffff;
+  padding: 60px 20px;
+  background-image: radial-gradient(#e0e0e0 0.8px, transparent 0.8px);
+  background-size: 28px 28px;
+}
 
-    .invitation-card {
-      max-width: 900px;
-      width: 100%;
-      margin: 0 auto;
-    }
+.invitation-card {
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto;
+  background: #ffffff;
+  border-radius: 56px;
+  padding: 2.5rem 1.8rem 3.5rem;
+  box-shadow: 0 30px 50px rgba(0, 0, 0, 0.08);
+  border: 1px solid #d4d4d4;
+  transition: all 0.2s;
+}
 
-    .invitation-title {
-      font-family: 'Inter', sans-serif;
-      font-size: 1rem;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: #000000;
-      font-weight: 500;
-      margin-bottom: 1.8rem;
-    }
+.invitation-title {
+  font-size: 1.2rem;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: #4a4a4a;
+  font-weight: 500;
+  margin-bottom: 1.2rem;
+}
 
-    .couple-names {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 4.2rem;
-      font-weight: 700;
-      letter-spacing: -0.5px;
-      color: #000000;
-      margin: 0.5rem 0;
-      line-height: 1.2;
-    }
+.couple-names {
+  font-size: 3.8rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: #111;
+  margin: 0.5rem 0;
+  line-height: 1.2;
+  word-break: keep-all;
+  flex-wrap: wrap;
+}
 
-    .hero-date {
-      font-family: 'Inter', sans-serif;
-      font-size: 1.4rem;
-      font-weight: 500;
-      margin: 1rem 0 1rem;
-      color: #000000;
-      letter-spacing: 1px;
-    }
+.ampersand-cross {
+  font-size: 3rem;
+  font-weight: 300;
+  color: #5a5a5a;
+  margin: 0 0.3rem;
+  display: inline-block;
+}
 
-    .hero-welcome {
-      font-family: 'Inter', sans-serif;
-      font-size: 1rem;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      margin: 0.25rem 0 1.8rem;
-      color: #000000;
-      font-weight: 500;
-    }
+.hero-date {
+  font-size: 1.8rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 600;
+  margin: 1rem 0 0.75rem;
+  color: #3a3a3a;
+}
 
-    /* Персональное обращение — как на фото "Уважаемые гости!" */
-    .personal-greeting {
-      font-family: 'Inter', sans-serif;
-      font-size: 1.2rem;
-      font-weight: 400;
-      margin: 1.2rem auto 2rem;
-      color: #000000;
-      border-top: 1px solid #ccc;
-      border-bottom: 1px solid #ccc;
-      display: inline-block;
-      padding: 0.5rem 1.2rem;
-      letter-spacing: 0.3px;
-    }
+.hero-welcome {
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin: 0.5rem 0 1.5rem;
+  color: #5e5e5e;
+  font-weight: 500;
+}
 
-    /* Горизонтальный таймер — как на фото */
-    .countdown-wrapper {
-      display: flex;
-      justify-content: center;
-      gap: 1.8rem;
-      flex-wrap: wrap;
-      margin: 2rem 0 2rem;
-    }
+/* ПЕРСОНАЛЬНОЕ ОБРАЩЕНИЕ */
+.personal-greeting {
+  font-size: 1.4rem;
+  font-weight: 400;
+  margin: 1rem auto 1rem;
+  font-family: 'Cormorant Garamond', serif;
+  color: #2c2c2c;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  display: inline-block;
+  padding: 0.5rem 1.2rem;
+  letter-spacing: 0.5px;
+  background: #fefefe;
+}
 
-    .timer-block {
-      text-align: center;
-      background: transparent;
-      padding: 0;
-      min-width: 70px;
-    }
+/* Countdown Timer – центрирование */
+.countdown-wrapper {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin: 2rem 0 1.8rem;
+}
 
-    .timer-number {
-      font-family: 'Inter', sans-serif;
-      font-size: 2.6rem;
-      font-weight: 700;
-      color: #000000;
-      line-height: 1;
-      letter-spacing: 1px;
-    }
+.timer-block {
+  background: #f5f5f5;
+  padding: 0.6rem 1rem;
+  border-radius: 36px;
+  min-width: 75px;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.04);
+  border: 1px solid #cfcfcf;
+  text-align: center;
+}
 
-    .timer-label {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      color: #555;
-      font-weight: 500;
-      margin-top: 6px;
-    }
+.timer-number {
+  font-size: 2.2rem;
+  font-weight: 700;
+  font-family: 'Cormorant Garamond', serif;
+  color: #1f1f1f;
+  line-height: 1.1;
+}
 
-    /* Кнопка (оставлена для функционала, но на фото её нет — при желании можно скрыть, но пусть будет аккуратной) */
-    .btn-rsvp {
-      background: #000000;
-      border: none;
-      color: white;
-      padding: 12px 32px;
-      border-radius: 40px;
-      font-size: 0.9rem;
-      font-weight: 500;
-      letter-spacing: 1px;
-      cursor: pointer;
-      transition: all 0.2s;
-      display: inline-block;
-      text-decoration: none;
-      font-family: 'Inter', sans-serif;
-      margin-top: 30px;
-    }
+.timer-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #4b4b4b;
+  font-weight: 500;
+}
 
-    .btn-rsvp:hover {
-      background: #333;
-      transform: translateY(-2px);
-    }
+/* кнопка */
+.btn-rsvp {
+  background: #2c2c2c;
+  border: none;
+  color: white;
+  padding: 12px 32px;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.25s;
+  display: inline-block;
+  text-decoration: none;
+  font-family: 'Inter', sans-serif;
+  margin-top: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  width: auto;
+  max-width: 100%;
+}
 
-    /* Остальные секции — единый минималистичный ч/б стиль */
-    section {
-      padding: 70px 0;
-      border-top: 1px solid #eeeeee;
-    }
+.btn-rsvp:hover {
+  background: #0a0a0a;
+  transform: translateY(-2px);
+}
 
-    .section-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2.2rem;
-      text-align: center;
-      margin-bottom: 2rem;
-      font-weight: 600;
-      color: #000;
-    }
+/* секции */
+section {
+  padding: 70px 0;
+  border-bottom: 1px solid #e0e0e0;
+}
 
-    .section-title:after {
-      content: '';
-      display: block;
-      width: 50px;
-      height: 1px;
-      background: #aaa;
-      margin: 12px auto 0;
-    }
+.section-title {
+  font-size: 2.4rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  font-weight: 600;
+  color: #1f1f1f;
+  position: relative;
+}
 
-    .details-flex {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 2rem;
-      justify-content: center;
-    }
+.section-title:after {
+  content: '';
+  display: block;
+  width: 70px;
+  height: 2px;
+  background: #6f6f6f;
+  margin: 12px auto 0;
+}
 
-    .info-card {
-      background: #fafafa;
-      padding: 1.8rem 1.5rem;
-      border-radius: 24px;
-      text-align: center;
-      flex: 1 1 220px;
-      border: 1px solid #e0e0e0;
-    }
+.details-flex {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.8rem;
+  justify-content: center;
+}
 
-    .info-card i {
-      font-size: 2rem;
-      color: #2c2c2c;
-      margin-bottom: 1rem;
-    }
+.info-card {
+  background: #ffffff;
+  padding: 1.8rem 1.5rem;
+  border-radius: 40px;
+  text-align: center;
+  flex: 1 1 240px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.02);
+  border: 1px solid #dbdbdb;
+}
 
-    .info-card h3 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.4rem;
-      margin-bottom: 0.5rem;
-    }
+.info-card i {
+  font-size: 2.2rem;
+  color: #3b3b3b;
+  margin-bottom: 1rem;
+}
 
-    .program-list {
-      max-width: 680px;
-      margin: 0 auto;
-    }
+.info-card h3 {
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+}
 
-    .program-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      padding: 0.8rem 0;
-      border-bottom: 1px dashed #ddd;
-      font-size: 1rem;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
+.program-list {
+  max-width: 680px;
+  margin: 0 auto;
+}
 
-    .program-time {
-      font-weight: 600;
-      font-family: monospace;
-    }
+.program-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 0.8rem 1rem;
+  border-bottom: 1px dashed #cbcbcb;
+  font-size: 1rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
 
-    .map-simple {
-      background: #f5f5f5;
-      border-radius: 32px;
-      padding: 2rem;
-      text-align: center;
-    }
+.program-time {
+  font-weight: 700;
+  color: #2b2b2b;
+  font-family: monospace;
+  font-size: 1rem;
+  min-width: 100px;
+}
 
-    .rsvp-form-card {
-      max-width: 680px;
-      width: 100%;
-      margin: 0 auto;
-      background: #ffffff;
-      padding: 2rem;
-      border-radius: 32px;
-      border: 1px solid #e0e0e0;
-    }
+.map-simple {
+  background: #ececec;
+  border-radius: 48px;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  color: #2e2e2e;
+}
 
-    .form-group {
-      margin-bottom: 1.5rem;
-    }
+.rsvp-form-card {
+  max-width: 680px;
+  width: 100%;
+  margin: 0 auto;
+  background: #ffffff;
+  padding: 2rem 1.5rem;
+  border-radius: 48px;
+  box-shadow: 0 20px 35px rgba(0,0,0,0.05);
+  border: 1px solid #e2e2e2;
+}
 
-    input, select, textarea {
-      width: 100%;
-      padding: 12px 18px;
-      border: 1px solid #ccc;
-      border-radius: 40px;
-      font-family: 'Inter', sans-serif;
-      background: #fff;
-      font-size: 0.95rem;
-    }
+.form-group {
+  margin-bottom: 1.5rem;
+}
 
-    textarea {
-      border-radius: 24px;
-    }
+input, select, textarea {
+  width: 100%;
+  padding: 14px 20px;
+  border: 1px solid #cbcbcb;
+  border-radius: 60px;
+  font-family: 'Inter', sans-serif;
+  background: #fefefe;
+  font-size: 1rem;
+  color: #111;
+}
 
-    footer {
-      background: #fafafa;
-      padding: 2rem;
-      text-align: center;
-      border-top: 1px solid #eee;
-      font-size: 0.85rem;
-      color: #444;
-    }
+textarea {
+  border-radius: 28px;
+}
 
-    /* Анимация появления */
-    .fade-up {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-    }
-    .fade-up.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: #6f6f6f;
+  box-shadow: 0 0 0 3px rgba(80,80,80,0.2);
+}
 
-    /* Адаптация под мобильные — всё строго по центру */
-    @media (max-width: 768px) {
-      .couple-names {
-        font-size: 2.8rem;
-      }
-      .hero-date {
-        font-size: 1.2rem;
-      }
-      .countdown-wrapper {
-        gap: 1rem;
-      }
-      .timer-block {
-        min-width: 60px;
-      }
-      .timer-number {
-        font-size: 2rem;
-      }
-      .timer-label {
-        font-size: 0.6rem;
-      }
-      .personal-greeting {
-        font-size: 1rem;
-      }
-      .btn-rsvp {
-        padding: 10px 28px;
-      }
-      section {
-        padding: 50px 0;
-      }
-    }
+.feedback {
+  text-align: center;
+  margin-top: 1rem;
+  font-weight: 500;
+}
 
-    @media (max-width: 480px) {
-      .couple-names {
-        font-size: 2.2rem;
-      }
-      .hero-date {
-        font-size: 1rem;
-      }
-      .countdown-wrapper {
-        gap: 0.8rem;
-      }
-      .timer-block {
-        min-width: 52px;
-      }
-      .timer-number {
-        font-size: 1.6rem;
-      }
-      .timer-label {
-        font-size: 0.55rem;
-        letter-spacing: 0.5px;
-      }
-      .personal-greeting {
-        font-size: 0.9rem;
-        padding: 0.3rem 0.8rem;
-      }
-      .invitation-title {
-        font-size: 0.8rem;
-        letter-spacing: 3px;
-      }
-    }
-  </style>
-</head>
-<body>
+footer {
+  background: #f3f3f3;
+  padding: 2rem 1rem;
+  text-align: center;
+  color: #3a3a3a;
+  font-size: 0.9rem;
+}
 
-<main>
-  <!-- ГЛАВНЫЙ ЭКРАН — полное соответствие фото -->
-  <div class="hero">
-    <div class="invitation-card">
-      <div class="invitation-title">ПРИГЛАШЕНИЕ</div>
-      <div class="couple-names">
-        АНГЕЛИНА & ЯКОВ
-      </div>
-      <div class="hero-date">07 АВГУСТА 2026</div>
-      <div class="hero-welcome">ЖДЁМ ВАС</div>
+/* анимация появления */
+.fade-up {
+  opacity: 0;
+  transform: translateY(25px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
 
-      <!-- Персональное обращение (по умолчанию "Уважаемые гости!") -->
-      <div id="guestGreetingContainer" class="personal-greeting"></div>
+.ornament {
+  width: 40px;
+  height: 2px;
+  background: #7e7e7e;
+  margin: 1rem auto;
+}
 
-      <!-- Таймер: недели, дни, часы, минуты, секунды -->
-      <div class="countdown-wrapper" id="countdown">
-        <div class="timer-block"><div class="timer-number" id="weeks">00</div><div class="timer-label">НЕДЕЛЬ</div></div>
-        <div class="timer-block"><div class="timer-number" id="days">00</div><div class="timer-label">ДНЕЙ</div></div>
-        <div class="timer-block"><div class="timer-number" id="hours">00</div><div class="timer-label">ЧАСОВ</div></div>
-        <div class="timer-block"><div class="timer-number" id="minutes">00</div><div class="timer-label">МИНУТ</div></div>
-        <div class="timer-block"><div class="timer-number" id="seconds">00</div><div class="timer-label">СЕКУНД</div></div>
-      </div>
-
-      <a href="#rsvp" class="btn-rsvp">ПОДТВЕРДИТЬ ПРИСУТСТВИЕ</a>
-    </div>
-  </div>
-
-  <!-- История -->
-  <section id="story">
-    <div class="container fade-up">
-      <h2 class="section-title">Наша история</h2>
-      <div style="max-width: 700px; margin: 0 auto; text-align: center; font-size: 1rem; line-height: 1.5; color: #2e2e2e;">
-        <p>Две судьбы, соединённые искренней любовью. Мы встретились в шуме большого города, но поняли — наш мир теперь неразделим. Каждый миг рядом наполнен гармонией и светом.</p>
-        <p style="margin-top: 1rem;">Приглашаем вас стать свидетелями рождения нашей семьи. Ваше присутствие станет самым дорогим подарком в этот особенный день.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Детали -->
-  <section id="details">
-    <div class="container fade-up">
-      <h2 class="section-title">Детали праздника</h2>
-      <div class="details-flex">
-        <div class="info-card">
-          <i class="fas fa-calendar-alt"></i>
-          <h3>Дата и время</h3>
-          <p>07 августа 2026 года<br>Сбор гостей: 16:30<br>Церемония: 17:00</p>
-        </div>
-        <div class="info-card">
-          <i class="fas fa-map-marker-alt"></i>
-          <h3>Локация</h3>
-          <p>Загородный клуб «Белая роща»<br>Ленинградская область, д. Рапполово, 15</p>
-        </div>
-        <div class="info-card">
-          <i class="fas fa-tshirt"></i>
-          <h3>Дресс-код</h3>
-          <p>Элегантный чёрно-белый стиль<br>Приветствуются монохромные образы</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Программа -->
-  <section id="program">
-    <div class="container fade-up">
-      <h2 class="section-title">Программа дня</h2>
-      <div class="program-list">
-        <div class="program-item"><span class="program-time">16:30 – 17:00</span><span>Встреча гостей, аперитив</span></div>
-        <div class="program-item"><span class="program-time">17:00 – 17:45</span><span>Торжественная церемония</span></div>
-        <div class="program-item"><span class="program-time">18:00 – 19:30</span><span>Фуршет, фотосессия</span></div>
-        <div class="program-item"><span class="program-time">19:30 – 22:00</span><span>Банкет, тосты, музыка</span></div>
-        <div class="program-item"><span class="program-time">22:00 – 23:30</span><span>Танцы, сюрпризы, фейерверк</span></div>
-        <div class="program-item"><span class="program-time">23:30</span><span>Сладкий стол</span></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Карта -->
-  <section>
-    <div class="container fade-up">
-      <h2 class="section-title">Как нас найти</h2>
-      <div class="map-simple">
-        <i class="fas fa-map-pin" style="font-size: 2rem; margin-bottom: 0.8rem; display: inline-block;"></i>
-        <p><strong>Клуб «Белая роща»</strong><br>Ленинградская область, Всеволожский р-н, д. Рапполово, ул. Центральная, 15</p>
-        <p style="margin: 0.8rem 0;">🚗 Бесплатная парковка. Трансфер от метро «Девяткино».</p>
-        <a href="https://maps.google.com/?q=60.0909,30.5239" target="_blank" style="color:#000; text-decoration: underline; font-weight: 500;">Открыть в Google Maps →</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- RSVP форма -->
-  <section id="rsvp">
-    <div class="container fade-up">
-      <h2 class="section-title">Подтверждение участия</h2>
-      <div class="rsvp-form-card">
-        <form id="rsvpWeddingForm">
-          <div class="form-group">
-            <input type="text" id="guestFullName" placeholder="Ваши имя и отчество" required>
-          </div>
-          <div class="form-group">
-            <input type="email" id="guestEmailAddr" placeholder="Email для деталей" required>
-          </div>
-          <div class="form-group">
-            <select id="attendingStatus" required>
-              <option value="" disabled selected>Вы будете на свадьбе?</option>
-              <option value="yes">С радостью приду!</option>
-              <option value="plus">Буду с гостем / семьёй</option>
-              <option value="no">К сожалению, не смогу</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <textarea rows="3" id="guestWishes" placeholder="Пожелания, вопросы, особые предпочтения..."></textarea>
-          </div>
-          <button type="submit" class="btn-rsvp" style="width:100%; background:#000;">ОТПРАВИТЬ ПОДТВЕРЖДЕНИЕ</button>
-          <div id="rsvpFeedback" class="feedback"></div>
-        </form>
-        <p style="font-size: 0.75rem; text-align: center; margin-top: 1.5rem;">🖤 Пожалуйста, подтвердите участие до 1 июля 2026</p>
-      </div>
-    </div>
-  </section>
-</main>
-
-<footer>
-  <p>С трепетом ждём встречи, чтобы разделить этот день вместе с вами.</p>
-  <p style="margin-top: 0.5rem;">Ангелина & Яков</p>
-  <p style="margin-top: 1rem; font-size: 0.7rem;">По любым вопросам: +7 921 123-45-67 | wedding@angelina-yakov.ru</p>
-</footer>
-
-<script>
-  // Получение имени гостя из URL (персонализация)
-  function getGuestNameFromURL() {
-    const params = new URLSearchParams(window.location.search);
-    let guest = params.get('guest');
-    if (guest) {
-      guest = decodeURIComponent(guest).trim();
-      return guest;
-    }
-    return null;
+/* === АДАПТАЦИЯ ПОД МОБИЛЬНЫЕ УСТРОЙСТВА (ЦЕНТРИРОВАНИЕ) === */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 16px;
   }
-
-  const guestName = getGuestNameFromURL();
-  const greetingContainer = document.getElementById('guestGreetingContainer');
-  if (guestName && guestName !== "") {
-    greetingContainer.innerHTML = `Уважаемый(ая) ${guestName}!`;
-  } else {
-    greetingContainer.innerHTML = `Уважаемые гости!`;
+  .invitation-card {
+    padding: 1.8rem 1.2rem 2.5rem;
+    border-radius: 40px;
   }
-
-  // Если имя гостя задано, предзаполним поле в форме
-  if (guestName) {
-    const nameInput = document.getElementById('guestFullName');
-    if (nameInput) nameInput.value = guestName;
+  .couple-names {
+    font-size: 2.5rem;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.2rem;
   }
-
-  // Таймер до 07.08.2026 17:00
-  const targetDate = new Date("August 7, 2026 17:00:00").getTime();
-
-  function updateTimer() {
-    const now = new Date().getTime();
-    const distance = targetDate - now;
-
-    if (distance < 0) {
-      document.getElementById("weeks").innerHTML = "00";
-      document.getElementById("days").innerHTML = "00";
-      document.getElementById("hours").innerHTML = "00";
-      document.getElementById("minutes").innerHTML = "00";
-      document.getElementById("seconds").innerHTML = "00";
-      return;
-    }
-
-    const totalSeconds = Math.floor(distance / 1000);
-    const weeks = Math.floor(totalSeconds / (7 * 24 * 3600));
-    const days = Math.floor((totalSeconds % (7 * 24 * 3600)) / (24 * 3600));
-    const hours = Math.floor((totalSeconds % (24 * 3600)) / 3600);
-    const minutes = Math.floor((totalSeconds % 3600) / 60);
-    const seconds = totalSeconds % 60;
-
-    document.getElementById("weeks").innerHTML = weeks < 10 ? "0" + weeks : weeks;
-    document.getElementById("days").innerHTML = days < 10 ? "0" + days : days;
-    document.getElementById("hours").innerHTML = hours < 10 ? "0" + hours : hours;
-    document.getElementById("minutes").innerHTML = minutes < 10 ? "0" + minutes : minutes;
-    document.getElementById("seconds").innerHTML = seconds < 10 ? "0" + seconds : seconds;
+  .ampersand-cross {
+    font-size: 2rem;
+    margin: 0 0.2rem;
   }
-  setInterval(updateTimer, 1000);
-  updateTimer();
+  .hero-date {
+    font-size: 1.5rem;
+  }
+  .timer-block {
+    min-width: 68px;
+    padding: 0.5rem 0.6rem;
+  }
+  .timer-number {
+    font-size: 1.8rem;
+  }
+  .timer-label {
+    font-size: 0.7rem;
+  }
+  .section-title {
+    font-size: 2rem;
+  }
+  .program-item {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.3rem;
+  }
+  .program-time {
+    margin-bottom: 0.2rem;
+  }
+  .personal-greeting {
+    font-size: 1.2rem;
+    padding: 0.3rem 0.8rem;
+  }
+  .btn-rsvp {
+    padding: 10px 24px;
+    font-size: 0.95rem;
+    width: 100%;
+    max-width: 280px;
+  }
+  .info-card {
+    padding: 1.5rem 1rem;
+  }
+  .rsvp-form-card {
+    padding: 1.5rem;
+  }
+  section {
+    padding: 50px 0;
+  }
+}
 
-  // RSVP форма (сохранение в localStorage)
-  const rsvpForm = document.getElementById('rsvpWeddingForm');
-  const feedbackDiv = document.getElementById('rsvpFeedback');
-
-  rsvpForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    const name = document.getElementById('guestFullName').value.trim();
-    const email = document.getElementById('guestEmailAddr').value.trim();
-    const attendance = document.getElementById('attendingStatus').value;
-
-    if (!name || !email || !attendance) {
-      feedbackDiv.innerHTML = '<span style="color:#b33;">❌ Заполните имя, email и статус</span>';
-      return;
-    }
-    if (!email.includes('@') || !email.includes('.')) {
-      feedbackDiv.innerHTML = '<span style="color:#b33;">❌ Введите корректный email</span>';
-      return;
-    }
-
-    const rsvpEntry = {
-      name, email, attendance,
-      message: document.getElementById('guestWishes').value,
-      timestamp: new Date().toISOString()
-    };
-    let allResponses = localStorage.getItem('wedding_rsvp_angelina_yakov');
-    if (allResponses) allResponses = JSON.parse(allResponses);
-    else allResponses = [];
-    allResponses.push(rsvpEntry);
-    localStorage.setItem('wedding_rsvp_angelina_yakov', JSON.stringify(allResponses));
-
-    feedbackDiv.innerHTML = `<span style="color:#2c5a2e;">🖤 Спасибо, ${name}! Мы ждём вас. 🖤</span>`;
-    rsvpForm.reset();
-    if (guestName) document.getElementById('guestFullName').value = guestName;
-    setTimeout(() => feedbackDiv.innerHTML = '', 5000);
-  });
-
-  // Анимация появления
-  const fadeElements = document.querySelectorAll('.fade-up');
-  const checkFade = () => {
-    fadeElements.forEach(el => {
-      const rect = el.getBoundingClientRect();
-      if (rect.top < window.innerHeight - 80) el.classList.add('visible');
-    });
-  };
-  window.addEventListener('scroll', checkFade);
-  window.addEventListener('load', checkFade);
-
-  // Плавная прокрутка по якорям
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-      const targetId = this.getAttribute('href');
-      if (targetId === "#" || targetId === "") return;
-      const target = document.querySelector(targetId);
-      if (target) {
-        e.preventDefault();
-        target.scrollIntoView({ behavior: 'smooth' });
-      }
-    });
-  });
-</script>
-<!-- Font Awesome для иконок -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
-</body>
-</html>
+@media (max-width: 480px) {
+  .invitation-card {
+    padding: 1.5rem 1rem 2rem;
+  }
+  .couple-names {
+    font-size: 2rem;
+  }
+  .hero-date {
+    font-size: 1.3rem;
+  }
+  .hero-welcome {
+    font-size: 1rem;
+    letter-spacing: 1px;
+  }
+  .countdown-wrapper {
+    gap: 0.7rem;
+  }
+  .timer-block {
+    min-width: 58px;
+    padding: 0.4rem 0.4rem;
+  }
+  .timer-number {
+    font-size: 1.5rem;
+  }
+  .timer-label {
+    font-size: 0.65rem;
+  }
+  .section-title {
+    font-size: 1.8rem;
+  }
+  .personal-greeting {
+    font-size: 1rem;
+  }
+  .btn-rsvp {
+    width: 100%;
+    max-width: 100%;
+  }
+  input, select, textarea {
+    padding: 12px 16px;
+    font-size: 0.95rem;
+  }
+}
