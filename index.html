@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
   <title>Свадебное приглашение | Ангелина & Яков</title>
+  <!-- Единая стилистика: Playfair Display для акцентов, Karla для текста -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Karla:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
@@ -191,8 +192,9 @@
       font-weight: 500;
       margin-bottom: 2rem;
     }
+    /* Текст-обращение — Karla для единообразия */
     .invitation-text {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Karla', sans-serif;
       font-size: 1.2rem;
       line-height: 1.6;
       color: #2c2c2c;
@@ -208,6 +210,7 @@
     .invitation-text p {
       margin-bottom: 0.5rem;
     }
+    /* Персональное обращение — акцентный шрифт */
     .personal-greeting {
       font-family: 'Playfair Display', serif;
       font-size: 1.3rem;
@@ -221,8 +224,9 @@
       letter-spacing: 0.5px;
       background: #fefefe;
     }
+    /* Приглашающий текст — Karla */
     .invite-message {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Karla', sans-serif;
       font-size: 1.15rem;
       line-height: 1.5;
       color: #2c2c2c;
@@ -483,26 +487,29 @@
       background: #3a3a3a;
       transform: scale(1.02);
     }
+    /* Медиа-запросы: исправленное отображение верхнего фото на мобильных */
     @media (max-width: 768px) {
-  .names-layout { gap: 25px; }
-  .names-photo img { width: 180px; }
-  .initial { font-size: 2rem; }
-  .initial-line { width: 45px; }
-  .hero-date { font-size: 1.3rem; }
-  .timer-number { font-size: 2rem; }
-  .timer-block { min-width: 60px; }
-  .music-control { padding: 8px 16px; font-size: 0.8rem; bottom: 15px; right: 15px; }
-  /* изменённое правило для верхнего фото */
-  .top-photo img { max-height: 85vh; width: auto; margin: 0 auto; }
-  .invitation-text { font-size: 1rem; padding: 1rem; }
-  .invite-message { font-size: 1rem; }
-  .personal-greeting { font-size: 1.1rem; }
-  .map-container iframe { height: 300px; }
+      .names-layout { gap: 25px; }
+      .names-photo img { width: 180px; }
+      .initial { font-size: 2rem; }
+      .initial-line { width: 45px; }
+      .hero-date { font-size: 1.3rem; }
+      .timer-number { font-size: 2rem; }
+      .timer-block { min-width: 60px; }
+      .music-control { padding: 8px 16px; font-size: 0.8rem; bottom: 15px; right: 15px; }
+      /* Фото на весь экран */
+      .top-photo { padding: 0; margin-bottom: 20px; }
+      .top-photo img { max-height: 90vh; width: 100%; height: auto; object-fit: contain; border-radius: 0; }
+      .invitation-text { font-size: 1rem; padding: 1rem; }
+      .invite-message { font-size: 1rem; }
+      .personal-greeting { font-size: 1.1rem; }
+      .map-container iframe { height: 300px; }
     }
     @media (max-width: 580px) {
       .names-layout { flex-direction: column; }
       .names-left { flex-direction: row; gap: 30px; }
       .invitation-text { font-size: 0.9rem; }
+      .top-photo img { max-height: 92vh; }
     }
   </style>
 </head>
@@ -582,23 +589,23 @@
         <section id="storyClone"><div class="container fade-up"><h2 class="section-title">Наша история</h2><div style="max-width:700px; margin:0 auto; text-align:center; font-size:1.05rem;"><p>Мы столько раз расставались и снова находили друг друга, проверяя судьбу на прочность, но каждый раз что-то невидимое тянуло нас обратно. Все эти расставания и встречи были лишь проверкой того, как сильно мы нужны друг другу. Все испытания доказали: наши сердца всегда безошибочно находят то единственное место, где им тепло и спокойно. Приглашаем вас разделить день, когда мы говорим судьбе «спасибо»</p></div></div></section>
         <section id="detailsClone"><div class="container fade-up"><h2 class="section-title">Детали праздника</h2><div class="details-flex"><div class="info-card"><i class="fas fa-calendar-alt"></i><h3>Дата и время</h3><p>07 августа 2026<br>Сбор: 16:30<br>Церемония: 17:00</p></div><div class="info-card"><i class="fas fa-map-marker-alt"></i><h3>Локация</h3><p>Церемония:<br>г.Елец, ул.Октябрьская ул., 120 <br>Ресторан:<br>«Мелодия», Липецкая обл., г.Елец, посёлок Строитель, 12б </p></div><div class="info-card"><i class="fas fa-tshirt"></i><h3>Дресс-код</h3><p>Стиль коктейльной вечеринки</p></div></div></div></section>
         <section id="programClone"><div class="container fade-up"><h2 class="section-title">Программа дня</h2><div class="program-list"><div class="program-item"><span class="program-time">16:30 – 17:00</span><span>Встреча гостей, аперитив</span></div><div class="program-item"><span class="program-time">17:00 – 17:45</span><span>Церемония</span></div><div class="program-item"><span class="program-time">18:00 – 19:30</span><span>Фуршет, фотосессия</span></div><div class="program-item"><span class="program-time">19:30 – 22:00</span><span>Банкет, тосты, музыка</span></div><div class="program-item"><span class="program-time">22:00 – 23:30</span><span>Танцы, фейерверк</span></div><div class="program-item"><span class="program-time">23:30</span><span>Сладкий стол</span></div></div></div></section>
-       <!-- Блок "Как нас найти" с Яндекс.Картой (точные координаты 52.605143, 38.478521) -->
-<section>
-  <div class="container fade-up">
-    <h2 class="section-title">Как нас найти</h2>
-    <div class="map-container">
-      <iframe src="https://yandex.ru/map-widget/v1/?ll=38.478521%2C52.605143&z=18&pt=38.478521,52.605143,pm2rdm&l=map" 
-              allowfullscreen="true" 
-              loading="lazy">
-      </iframe>
-    </div>
-    <div class="map-address">
-      <p><strong>Ресторан «Мелодия»</strong><br>Липецкая область, г. Елец, посёлок Строитель, 12Б</p>
-      <p>🚗 Бесплатная парковка на территории.</p>
-      <p><a href="https://yandex.ru/maps/?ll=38.478521%2C52.605143&z=18&pt=38.478521,52.605143,pm2rdm" target="_blank">Открыть Яндекс.Карты (проложить маршрут) →</a></p>
-    </div>
-  </div>
-</section>
+        <!-- Блок "Как нас найти" с Яндекс.Картой (точные координаты) -->
+        <section>
+          <div class="container fade-up">
+            <h2 class="section-title">Как нас найти</h2>
+            <div class="map-container">
+              <iframe src="https://yandex.ru/map-widget/v1/?ll=38.478521%2C52.605143&z=18&pt=38.478521,52.605143,pm2rdm&l=map" 
+                      allowfullscreen="true" 
+                      loading="lazy">
+              </iframe>
+            </div>
+            <div class="map-address">
+              <p><strong>Ресторан «Мелодия»</strong><br>Липецкая область, г. Елец, посёлок Строитель, 12Б</p>
+              <p>🚗 Бесплатная парковка на территории.</p>
+              <p><a href="https://yandex.ru/maps/?ll=38.478521%2C52.605143&z=18&pt=38.478521,52.605143,pm2rdm" target="_blank">Открыть Яндекс.Карты (проложить маршрут) →</a></p>
+            </div>
+          </div>
+        </section>
         <section id="rsvpClone"><div class="container fade-up"><h2 class="section-title">Подтверждение участия</h2><div class="rsvp-form-card"><form id="rsvpFormClone"><div class="form-group"><input type="text" id="guestFullNameClone" placeholder="Ваши имя и отчество" required></div><div class="form-group"><input type="email" id="guestEmailClone" placeholder="Email для деталей" required></div><div class="form-group"><select id="attendingStatusClone" required><option value="" disabled selected>Вы будете на свадьбе?</option><option value="yes">С радостью приду!</option><option value="plus">Буду с гостем / семьёй</option><option value="no">К сожалению, не смогу</option></select></div><div class="form-group"><textarea rows="3" id="guestWishesClone" placeholder="Пожелания, вопросы..."></textarea></div><button type="submit" class="btn-rsvp" style="width:100%; background:#1a1a1a;">ОТПРАВИТЬ</button><div id="rsvpFeedbackClone" class="feedback"></div></form><p style="font-size:0.75rem; text-align:center; margin-top:1.5rem;">🖤 Подтвердите участие до 1 июля 2026</p></div></div></section>
         <footer><p>С трепетом ждём встречи, чтобы разделить этот день вместе с вами.</p><p>Ангелина & Яков</p><p style="font-size:0.7rem;">+7 921 123-45-67 | wedding@angelina-yakov.ru</p></footer>
       </div>
