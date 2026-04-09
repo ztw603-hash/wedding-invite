@@ -146,20 +146,36 @@
     .paper-3d.unfolded .invitation-full {
       opacity: 1;
     }
-    /* Остальные стили приглашения */
+    /* ВЕРХНЕЕ ФОТО */
+    .top-photo {
+      text-align: center;
+      margin-bottom: 30px;
+      padding: 0 20px;
+    }
+    .top-photo img {
+      max-width: 100%;
+      max-height: 650px;
+      width: auto;
+      height: auto;
+      border-radius: 24px;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+      object-fit: cover;
+      border: 2px solid #f0f0f0;
+    }
+    /* ОСНОВНЫЕ СТИЛИ */
     .container {
       max-width: 1200px;
       margin: 0 auto;
       padding: 0 24px;
     }
     .hero {
-      min-height: 100vh;
+      min-height: auto;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
       background: transparent;
-      padding: 40px 20px;
+      padding: 20px 20px 40px;
     }
     .invitation-card {
       max-width: 1000px;
@@ -174,6 +190,46 @@
       color: #4a4a4a;
       font-weight: 500;
       margin-bottom: 2rem;
+    }
+    .invitation-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      line-height: 1.6;
+      color: #2c2c2c;
+      max-width: 700px;
+      margin: 0 auto 1.5rem auto;
+      text-align: center;
+      background: rgba(255, 255, 245, 0.6);
+      padding: 1.2rem;
+      border-radius: 32px;
+      border-left: 3px solid #b0b0b0;
+      border-right: 3px solid #b0b0b0;
+    }
+    .invitation-text p {
+      margin-bottom: 0.5rem;
+    }
+    .personal-greeting {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 400;
+      margin: 1rem auto 1.5rem;
+      color: #1e1e1e;
+      border-top: 1px solid #d4d4d4;
+      border-bottom: 1px solid #d4d4d4;
+      display: inline-block;
+      padding: 0.5rem 1.5rem;
+      letter-spacing: 0.5px;
+      background: #fefefe;
+    }
+    .invite-message {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      line-height: 1.5;
+      color: #2c2c2c;
+      max-width: 650px;
+      margin: 1rem auto 0.5rem auto;
+      text-align: center;
+      font-style: italic;
     }
     .names-layout {
       display: flex;
@@ -234,7 +290,7 @@
       font-family: 'Playfair Display', serif;
       font-size: 1.5rem;
       font-weight: 500;
-      margin: 1.5rem 0 1rem;
+      margin: 1rem 0 0.5rem;
       color: #2c2c2c;
       letter-spacing: 1.5px;
     }
@@ -243,22 +299,9 @@
       font-size: 1rem;
       letter-spacing: 4px;
       text-transform: uppercase;
-      margin: 0.5rem 0 1.8rem;
+      margin: 1.5rem 0 1.8rem;
       color: #5a5a5a;
       font-weight: 500;
-    }
-    .personal-greeting {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.3rem;
-      font-weight: 400;
-      margin: 1.5rem auto 2rem;
-      color: #1e1e1e;
-      border-top: 1px solid #d4d4d4;
-      border-bottom: 1px solid #d4d4d4;
-      display: inline-block;
-      padding: 0.6rem 1.5rem;
-      letter-spacing: 0.5px;
-      background: #fefefe;
     }
     .countdown-wrapper {
       display: flex;
@@ -344,12 +387,33 @@
       gap: 0.5rem;
     }
     .program-time { font-weight: 600; font-family: monospace; }
-    .map-simple {
-      background: #f7f7f7;
+    
+    /* Стили для Яндекс.Карты */
+    .map-container {
+      width: 100%;
       border-radius: 36px;
-      padding: 2rem;
-      text-align: center;
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      margin-top: 1rem;
     }
+    .map-container iframe {
+      width: 100%;
+      height: 400px;
+      border: 0;
+      display: block;
+    }
+    .map-address {
+      text-align: center;
+      margin-top: 1rem;
+      font-size: 0.95rem;
+      color: #4a4a4a;
+    }
+    .map-address a {
+      color: #1e1e1e;
+      text-decoration: underline;
+      font-weight: 500;
+    }
+    
     .rsvp-form-card {
       max-width: 680px;
       width: 100%;
@@ -387,7 +451,7 @@
       opacity: 1;
       transform: translateY(0);
     }
-    /* Кнопка включения музыки (всегда видна после открытия конверта) */
+    /* Кнопка музыки */
     .music-control {
       position: fixed;
       bottom: 25px;
@@ -428,10 +492,16 @@
       .timer-number { font-size: 2rem; }
       .timer-block { min-width: 60px; }
       .music-control { padding: 8px 16px; font-size: 0.8rem; bottom: 15px; right: 15px; }
+      .top-photo img { max-height: 250px; }
+      .invitation-text { font-size: 1rem; padding: 1rem; }
+      .invite-message { font-size: 1rem; }
+      .personal-greeting { font-size: 1.1rem; }
+      .map-container iframe { height: 300px; }
     }
     @media (max-width: 580px) {
       .names-layout { flex-direction: column; }
       .names-left { flex-direction: row; gap: 30px; }
+      .invitation-text { font-size: 0.9rem; }
     }
   </style>
 </head>
@@ -443,7 +513,7 @@
   Ваш браузер не поддерживает аудио.
 </audio>
 
-<!-- Кнопка для включения музыки (появляется после открытия конверта) -->
+<!-- Кнопка для включения музыки -->
 <button id="musicControlBtn" class="music-control">
   <i class="fas fa-music"></i> Включить музыку
 </button>
@@ -452,7 +522,7 @@
   <div class="envelope" id="envelope">
     <div class="envelope-flap"></div>
     <div class="folded-paper-inside">
-      <span>✧ приглашение ✧<br>нажмите, чтобы открыть</span>
+      <span>✧ Приглашение ✧<br>нажмите, чтобы открыть</span>
     </div>
   </div>
 </div>
@@ -467,14 +537,23 @@
   }
   const guestName = getGuestNameFromURL();
 
-  // Генерация HTML приглашения
+  // Генерация HTML приглашения (с Яндекс.Картой)
   function getInvitationHTML(guestName) {
     const greetingText = guestName ? `Уважаемый(ая) ${guestName}!` : `Уважаемые гости!`;
     return `
       <div class="invitation-full">
+        <!-- Верхнее фото -->
+        <div class="top-photo">
+          <img src="top-photo.jpg" alt="Ангелина и Яков" onerror="this.src='https://placehold.co/1200x600/f0f0f0/8a8a8a?text=Наше+фото'">
+        </div>
         <div class="hero">
           <div class="invitation-card">
-            <div class="invitation-title">ПРИГЛАШЕНИЕ</div>
+            <div class="invitation-title">Узнали этих ребят?</div>
+            <div class="invitation-text">
+              <p>Да-да, это мы! Время пролетело так быстро, представляете?</p>
+              <p>И вот мы повзрослели, все переосмыслили и приняли решение, что хватит ходить вокруг да около и пора жениться!</p>
+            </div>
+            <div class="personal-greeting">${greetingText}</div>
             <div class="names-layout">
               <div class="names-left">
                 <div class="initial-wrapper bottom-line"><div class="initial">Н</div><div class="initial-line"></div></div>
@@ -484,8 +563,11 @@
               <div class="names-photo"><img src="photo.jpg" alt="Ангелина и Яков" onerror="this.src='https://placehold.co/400x400/f0f0f0/8a8a8a?text=❤️'"></div>
             </div>
             <div class="hero-date">07 АВГУСТА 2026</div>
+            <div class="invite-message">
+              <p>Приглашаем вас присоединиться к нашему первому семейному празднику - нашей свадьбе!</p>
+              <p>Будем рады, если это событие вы разделите вместе с нами.</p>
+            </div>
             <div class="hero-welcome">ЖДЁМ ВАС</div>
-            <div class="personal-greeting">${greetingText}</div>
             <div class="countdown-wrapper" id="countdownClone">
               <div class="timer-block"><div class="timer-number" id="weeksClone">00</div><div class="timer-label">НЕДЕЛЬ</div></div>
               <div class="timer-block"><div class="timer-number" id="daysClone">00</div><div class="timer-label">ДНЕЙ</div></div>
@@ -496,10 +578,26 @@
             <a href="#rsvpClone" class="btn-rsvp">ПОДТВЕРДИТЬ ПРИСУТСТВИЕ</a>
           </div>
         </div>
-        <section id="storyClone"><div class="container fade-up"><h2 class="section-title">Наша история</h2><div style="max-width:700px; margin:0 auto; text-align:center; font-size:1.05rem;"><p>Две судьбы, соединённые искренней любовью. Мы встретились в шуме большого города, но поняли — наш мир теперь неразделим. Каждый миг рядом наполнен гармонией и светом.</p><p style="margin-top:1rem;">Приглашаем вас стать свидетелями рождения нашей семьи. Ваше присутствие станет самым дорогим подарком.</p></div></div></section>
-        <section id="detailsClone"><div class="container fade-up"><h2 class="section-title">Детали праздника</h2><div class="details-flex"><div class="info-card"><i class="fas fa-calendar-alt"></i><h3>Дата и время</h3><p>07 августа 2026<br>Сбор: 16:30<br>Церемония: 17:00</p></div><div class="info-card"><i class="fas fa-map-marker-alt"></i><h3>Локация</h3><p>Клуб «Белая роща»<br>Лен. обл., д. Рапполово, 15</p></div><div class="info-card"><i class="fas fa-tshirt"></i><h3>Дресс-код</h3><p>Чёрно-белый элегантный стиль</p></div></div></div></section>
+        <section id="storyClone"><div class="container fade-up"><h2 class="section-title">Наша история</h2><div style="max-width:700px; margin:0 auto; text-align:center; font-size:1.05rem;"><p>Мы столько раз расставались и снова находили друг друга, проверяя судьбу на прочность, но каждый раз что-то невидимое тянуло нас обратно. Все эти расставания и встречи были лишь проверкой того, как сильно мы нужны друг другу. Все испытания доказали: наши сердца всегда безошибочно находят то единственное место, где им тепло и спокойно. Приглашаем вас разделить день, когда мы говорим судьбе «спасибо»</p></div></div></section>
+        <section id="detailsClone"><div class="container fade-up"><h2 class="section-title">Детали праздника</h2><div class="details-flex"><div class="info-card"><i class="fas fa-calendar-alt"></i><h3>Дата и время</h3><p>07 августа 2026<br>Сбор: 16:30<br>Церемония: 17:00</p></div><div class="info-card"><i class="fas fa-map-marker-alt"></i><h3>Локация</h3><p>Церемония:<br>г.Елец, ул.Октябрьская ул., 120 <br>Ресторан:<br>«Мелодия», Липецкая обл., г.Елец, посёлок Строитель, 12б </p></div><div class="info-card"><i class="fas fa-tshirt"></i><h3>Дресс-код</h3><p>Стиль коктейльной вечеринки</p></div></div></div></section>
         <section id="programClone"><div class="container fade-up"><h2 class="section-title">Программа дня</h2><div class="program-list"><div class="program-item"><span class="program-time">16:30 – 17:00</span><span>Встреча гостей, аперитив</span></div><div class="program-item"><span class="program-time">17:00 – 17:45</span><span>Церемония</span></div><div class="program-item"><span class="program-time">18:00 – 19:30</span><span>Фуршет, фотосессия</span></div><div class="program-item"><span class="program-time">19:30 – 22:00</span><span>Банкет, тосты, музыка</span></div><div class="program-item"><span class="program-time">22:00 – 23:30</span><span>Танцы, фейерверк</span></div><div class="program-item"><span class="program-time">23:30</span><span>Сладкий стол</span></div></div></div></section>
-        <section><div class="container fade-up"><h2 class="section-title">Как нас найти</h2><div class="map-simple"><i class="fas fa-map-pin" style="font-size:2rem; margin-bottom:0.8rem;"></i><p><strong>Клуб «Белая роща»</strong><br>Всеволожский р-н, д. Рапполово, ул. Центральная, 15</p><p style="margin:0.8rem 0;">🚗 Бесплатная парковка. Трансфер от м. Девяткино.</p><a href="https://maps.google.com/?q=60.0909,30.5239" target="_blank" style="color:#1e1e1e; text-decoration:underline;">Открыть карту →</a></div></div></section>
+       <!-- Блок "Как нас найти" с Яндекс.Картой (точные координаты 52.605143, 38.478521) -->
+<section>
+  <div class="container fade-up">
+    <h2 class="section-title">Как нас найти</h2>
+    <div class="map-container">
+      <iframe src="https://yandex.ru/map-widget/v1/?ll=38.478521%2C52.605143&z=18&pt=38.478521,52.605143,pm2rdm&l=map" 
+              allowfullscreen="true" 
+              loading="lazy">
+      </iframe>
+    </div>
+    <div class="map-address">
+      <p><strong>Ресторан «Мелодия»</strong><br>Липецкая область, г. Елец, посёлок Строитель, 12Б</p>
+      <p>🚗 Бесплатная парковка на территории.</p>
+      <p><a href="https://yandex.ru/maps/?ll=38.478521%2C52.605143&z=18&pt=38.478521,52.605143,pm2rdm" target="_blank">Открыть Яндекс.Карты (проложить маршрут) →</a></p>
+    </div>
+  </div>
+</section>
         <section id="rsvpClone"><div class="container fade-up"><h2 class="section-title">Подтверждение участия</h2><div class="rsvp-form-card"><form id="rsvpFormClone"><div class="form-group"><input type="text" id="guestFullNameClone" placeholder="Ваши имя и отчество" required></div><div class="form-group"><input type="email" id="guestEmailClone" placeholder="Email для деталей" required></div><div class="form-group"><select id="attendingStatusClone" required><option value="" disabled selected>Вы будете на свадьбе?</option><option value="yes">С радостью приду!</option><option value="plus">Буду с гостем / семьёй</option><option value="no">К сожалению, не смогу</option></select></div><div class="form-group"><textarea rows="3" id="guestWishesClone" placeholder="Пожелания, вопросы..."></textarea></div><button type="submit" class="btn-rsvp" style="width:100%; background:#1a1a1a;">ОТПРАВИТЬ</button><div id="rsvpFeedbackClone" class="feedback"></div></form><p style="font-size:0.75rem; text-align:center; margin-top:1.5rem;">🖤 Подтвердите участие до 1 июля 2026</p></div></div></section>
         <footer><p>С трепетом ждём встречи, чтобы разделить этот день вместе с вами.</p><p>Ангелина & Яков</p><p style="font-size:0.7rem;">+7 921 123-45-67 | wedding@angelina-yakov.ru</p></footer>
       </div>
@@ -610,17 +708,14 @@
   function startMusic() {
     const music = document.getElementById('weddingMusic');
     if (!music) return;
-    // Если музыка уже играет, не перезапускаем
     if (!music.paused) return;
     music.volume = 0;
     music.play().then(() => {
       fadeInMusic(music, 0.3, 5000);
-      // После успешного запуска можно скрыть кнопку (или оставить для изменения громкости, но пока скроем)
       const btn = document.getElementById('musicControlBtn');
       if (btn) btn.classList.remove('show');
     }).catch(e => {
       console.warn('Не удалось запустить музыку:', e);
-      // Кнопка уже видна, ничего не делаем
     });
   }
 
@@ -655,16 +750,12 @@
         if (invFull) invFull.style.opacity = '1';
         envelopeOverlay.remove();
         initDynamicFeatures(guestName);
-        
-        // ПОСЛЕ ОТКРЫТИЯ КОНВЕРТА ПОКАЗЫВАЕМ КНОПКУ МУЗЫКИ
         musicControlBtn.classList.add('show');
       }, 1300);
     }, 400);
   }
 
   envelope.addEventListener('click', openEnvelopeAndExpand);
-  
-  // Назначение обработчика на кнопку музыки
   musicControlBtn.addEventListener('click', startMusic);
 </script>
 </body>
