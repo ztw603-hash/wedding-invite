@@ -2,86 +2,567 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ангелина & Яков</title>
-  <link rel="stylesheet" href="css/styles.css">
- 
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+  <title>Свадебное приглашение | Ангелина & Яков</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Karla:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background: #e8e0d3;
+      background-image: radial-gradient(circle at 30% 40%, rgba(0,0,0,0.04) 1.2px, transparent 1.2px);
+      background-size: 24px 24px;
+      font-family: 'Karla', sans-serif;
+      min-height: 100vh;
+      perspective: 1200px;
+    }
+    /* КОНВЕРТ (полноэкранный) */
+    .envelope-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #e8e0d3;
+      background-image: radial-gradient(circle at 30% 40%, rgba(0,0,0,0.04) 1.2px, transparent 1.2px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 3000;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+    .envelope-overlay.hide {
+      opacity: 0;
+      visibility: hidden;
+    }
+    .envelope {
+      position: relative;
+      width: 360px;
+      height: 250px;
+      background: #dfd2be;
+      border-radius: 12px;
+      box-shadow: 0 20px 35px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,250,235,0.6);
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .envelope:hover { transform: scale(1.02); }
+    .envelope-flap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #cfc0aa;
+      clip-path: polygon(0 0, 100% 0, 50% 55%);
+      border-radius: 12px 12px 0 0;
+      transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+      transform-origin: top;
+      z-index: 5;
+    }
+    .envelope.open .envelope-flap { transform: rotateX(180deg); }
+    .envelope:before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: rgba(0,0,0,0.1);
+      z-index: 2;
+    }
+    .folded-paper-inside {
+      position: absolute;
+      bottom: 20px;
+      left: 25px;
+      right: 25px;
+      height: 110px;
+      background: #fffef7;
+      border-radius: 6px;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 0.75rem;
+      color: #4a3a2a;
+      z-index: 3;
+      background: linear-gradient(135deg, #fffef7 0%, #fcf5ea 100%);
+    }
+    .folded-paper-inside:before, .folded-paper-inside:after {
+      content: '';
+      position: absolute;
+      left: 8%;
+      width: 84%;
+      height: 1px;
+      background: rgba(0,0,0,0.1);
+    }
+    .folded-paper-inside:before { top: 33%; }
+    .folded-paper-inside:after { top: 66%; }
+    .folded-paper-inside span {
+      display: block;
+      font-size: 0.7rem;
+      letter-spacing: 1px;
+      background: rgba(255,255,245,0.9);
+      padding: 4px 10px;
+      border-radius: 30px;
+    }
+    /* 3D РАЗВОРАЧИВАЮЩИЙСЯ ЛИСТ (сложен дважды) */
+    .paper-3d {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #fffef7;
+      z-index: 3100;
+      overflow-y: auto;
+      transform-origin: 50% 50%;
+      transform: rotateX(90deg) rotateY(180deg) scale(0.25);
+      border-radius: 30px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      transition: transform 1.2s cubic-bezier(0.2, 0.9, 0.3, 1.1), border-radius 0.8s ease, box-shadow 0.8s ease;
+    }
+    .paper-3d.unfolded {
+      transform: rotateX(0deg) rotateY(0deg) scale(1);
+      border-radius: 0;
+      box-shadow: none;
+    }
+    .invitation-full {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      opacity: 0;
+      transition: opacity 0.4s ease 0.6s;
+    }
+    .paper-3d.unfolded .invitation-full {
+      opacity: 1;
+    }
+    /* Остальные стили приглашения (центрированные, ч/б) */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: transparent;
+      padding: 40px 20px;
+    }
+    .invitation-card { max-width: 1000px; width: 100%; margin: 0 auto; }
+    .invitation-title {
+      font-family: 'Karla', sans-serif;
+      font-size: 0.9rem;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #4a4a4a;
+      font-weight: 500;
+      margin-bottom: 2rem;
+    }
+    .names-layout {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 50px;
+      margin: 20px 0 20px;
+      flex-wrap: wrap;
+    }
+    .names-left {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+    }
+    .initial-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+    .initial-wrapper.bottom-line .initial-line { order: 2; }
+    .initial-wrapper.bottom-line .initial { order: 1; }
+    .initial-wrapper.top-line .initial-line { order: 1; }
+    .initial-wrapper.top-line .initial { order: 2; }
+    .initial-line { width: 55px; height: 2px; background-color: #1a1a1a; }
+    .initial {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      font-weight: 600;
+      letter-spacing: 6px;
+      color: #1e1e1e;
+      line-height: 1;
+    }
+    .names-text {
+      text-align: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      letter-spacing: 3px;
+      line-height: 1.8;
+      font-weight: 500;
+      text-transform: uppercase;
+    }
+    .names-text div { margin: 4px 0; }
+    .names-photo img {
+      width: 240px;
+      height: auto;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+      border: 2px solid #f0f0f0;
+    }
+    .hero-date {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 500;
+      margin: 1.5rem 0 1rem;
+      color: #2c2c2c;
+      letter-spacing: 1.5px;
+    }
+    .hero-welcome {
+      font-family: 'Karla', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      margin: 0.5rem 0 1.8rem;
+      color: #5a5a5a;
+      font-weight: 500;
+    }
+    .personal-greeting {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 400;
+      margin: 1.5rem auto 2rem;
+      color: #1e1e1e;
+      border-top: 1px solid #d4d4d4;
+      border-bottom: 1px solid #d4d4d4;
+      display: inline-block;
+      padding: 0.6rem 1.5rem;
+      letter-spacing: 0.5px;
+      background: #fefefe;
+    }
+    .countdown-wrapper {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin: 2rem 0 2rem;
+    }
+    .timer-block { text-align: center; min-width: 75px; }
+    .timer-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: #1a1a1a;
+      line-height: 1;
+    }
+    .timer-label {
+      font-family: 'Karla', sans-serif;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #6e6e6e;
+      margin-top: 8px;
+    }
+    .btn-rsvp {
+      background: #1a1a1a;
+      border: none;
+      color: white;
+      padding: 12px 36px;
+      border-radius: 40px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      cursor: pointer;
+      transition: all 0.25s;
+      display: inline-block;
+      text-decoration: none;
+      font-family: 'Karla', sans-serif;
+      margin-top: 25px;
+    }
+    .btn-rsvp:hover { background: #3a3a3a; transform: translateY(-2px); }
+    section { padding: 80px 0; border-top: 1px solid #ececec; }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.3rem;
+      text-align: center;
+      margin-bottom: 2.5rem;
+      font-weight: 600;
+      color: #1a1a1a;
+    }
+    .section-title:after {
+      content: '';
+      display: block;
+      width: 55px;
+      height: 1px;
+      background: #b0b0b0;
+      margin: 14px auto 0;
+    }
+    .details-flex {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: center;
+    }
+    .info-card {
+      background: #fcfcfc;
+      padding: 2rem 1.5rem;
+      border-radius: 28px;
+      text-align: center;
+      flex: 1 1 220px;
+      border: 1px solid #e8e8e8;
+    }
+    .info-card i { font-size: 2.2rem; color: #2c2c2c; margin-bottom: 1rem; }
+    .info-card h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; margin-bottom: 0.75rem; }
+    .program-list { max-width: 680px; margin: 0 auto; }
+    .program-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 0.9rem 0;
+      border-bottom: 1px dashed #ddd;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .program-time { font-weight: 600; font-family: monospace; }
+    .map-simple {
+      background: #f7f7f7;
+      border-radius: 36px;
+      padding: 2rem;
+      text-align: center;
+    }
+    .rsvp-form-card {
+      max-width: 680px;
+      width: 100%;
+      margin: 0 auto;
+      background: #ffffff;
+      padding: 2rem;
+      border-radius: 36px;
+      border: 1px solid #e2e2e2;
+    }
+    .form-group { margin-bottom: 1.5rem; }
+    input, select, textarea {
+      width: 100%;
+      padding: 14px 20px;
+      border: 1px solid #d0d0d0;
+      border-radius: 60px;
+      font-family: 'Karla', sans-serif;
+      background: #fff;
+      font-size: 0.95rem;
+    }
+    textarea { border-radius: 28px; }
+    footer {
+      background: #fafafa;
+      padding: 2rem;
+      text-align: center;
+      border-top: 1px solid #eee;
+      font-size: 0.85rem;
+      color: #4e4e4e;
+    }
+    .fade-up {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    @media (max-width: 768px) {
+      .names-layout { gap: 25px; }
+      .names-photo img { width: 180px; }
+      .initial { font-size: 2rem; }
+      .initial-line { width: 45px; }
+      .hero-date { font-size: 1.3rem; }
+      .timer-number { font-size: 2rem; }
+      .timer-block { min-width: 60px; }
+    }
+    @media (max-width: 580px) {
+      .names-layout { flex-direction: column; }
+      .names-left { flex-direction: row; gap: 30px; }
+    }
+  </style>
 </head>
 <body>
 
-<div class="hero">
-
-  <div class="hero-inner">
-
-    <!-- ЛЕВАЯ ЧАСТЬ -->
-    <div class="hero-left">
-      <div class="monogram">H</div>
-
-      <div class="line"></div>
-
-      <div class="names">
-        АНГЕЛИНА<br>
-        <span>&</span><br>
-        ЯКОВ
-      </div>
-
-      <div class="line"></div>
-
-      <div class="ornament">Ж</div>
-    </div>
-
-    <!-- ПРАВАЯ ЧАСТЬ -->
-    <div class="hero-right">
-      <img src="photo.jpg" alt="Фото пары">
-    </div>
-
-  </div>
-
-  <!-- НИЖНИЙ БЛОК -->
-  <div class="hero-bottom">
-    <div class="date">07 августа 2026</div>
-    <div class="welcome">ЖДЁМ ВАС</div>
-
-    <div class="timer">
-      <div><span id="weeks">00</span><small>НЕДЕЛЬ</small></div>
-      <div><span id="days">00</span><small>ДНЕЙ</small></div>
-      <div><span id="hours">00</span><small>ЧАСОВ</small></div>
-      <div><span id="minutes">00</span><small>МИНУТ</small></div>
-      <div><span id="seconds">00</span><small>СЕКУНД</small></div>
+<div class="envelope-overlay" id="envelopeOverlay">
+  <div class="envelope" id="envelope">
+    <div class="envelope-flap"></div>
+    <div class="folded-paper-inside">
+      <span>✧ приглашение ✧<br>нажмите, чтобы открыть</span>
     </div>
   </div>
-
 </div>
 
 <script>
-const targetDate = new Date("August 7, 2026 17:00:00").getTime();
+  function getGuestNameFromURL() {
+    const params = new URLSearchParams(window.location.search);
+    let guest = params.get('guest');
+    if (guest) return decodeURIComponent(guest).trim();
+    return null;
+  }
+  const guestName = getGuestNameFromURL();
 
-function updateTimer() {
-  const now = new Date().getTime();
-  const distance = targetDate - now;
+  function getInvitationHTML(guestName) {
+    const greetingText = guestName ? `Уважаемый(ая) ${guestName}!` : `Уважаемые гости!`;
+    return `
+      <div class="invitation-full">
+        <div class="hero">
+          <div class="invitation-card">
+            <div class="invitation-title">ПРИГЛАШЕНИЕ</div>
+            <div class="names-layout">
+              <div class="names-left">
+                <div class="initial-wrapper bottom-line"><div class="initial">Н</div><div class="initial-line"></div></div>
+                <div class="names-text"><div>АНГЕЛИНА</div><div>&</div><div>ЯКОВ</div></div>
+                <div class="initial-wrapper top-line"><div class="initial-line"></div><div class="initial">Ж</div></div>
+              </div>
+              <div class="names-photo"><img src="photo.jpg" alt="Ангелина и Яков"></div>
+            </div>
+            <div class="hero-date">07 АВГУСТА 2026</div>
+            <div class="hero-welcome">ЖДЁМ ВАС</div>
+            <div class="personal-greeting">${greetingText}</div>
+            <div class="countdown-wrapper" id="countdownClone">
+              <div class="timer-block"><div class="timer-number" id="weeksClone">00</div><div class="timer-label">НЕДЕЛЬ</div></div>
+              <div class="timer-block"><div class="timer-number" id="daysClone">00</div><div class="timer-label">ДНЕЙ</div></div>
+              <div class="timer-block"><div class="timer-number" id="hoursClone">00</div><div class="timer-label">ЧАСОВ</div></div>
+              <div class="timer-block"><div class="timer-number" id="minutesClone">00</div><div class="timer-label">МИНУТ</div></div>
+              <div class="timer-block"><div class="timer-number" id="secondsClone">00</div><div class="timer-label">СЕКУНД</div></div>
+            </div>
+            <a href="#rsvpClone" class="btn-rsvp">ПОДТВЕРДИТЬ ПРИСУТСТВИЕ</a>
+          </div>
+        </div>
+        <section id="storyClone"><div class="container fade-up"><h2 class="section-title">Наша история</h2><div style="max-width:700px; margin:0 auto; text-align:center; font-size:1.05rem;"><p>Две судьбы, соединённые искренней любовью. Мы встретились в шуме большого города, но поняли — наш мир теперь неразделим. Каждый миг рядом наполнен гармонией и светом.</p><p style="margin-top:1rem;">Приглашаем вас стать свидетелями рождения нашей семьи. Ваше присутствие станет самым дорогим подарком.</p></div></div></section>
+        <section id="detailsClone"><div class="container fade-up"><h2 class="section-title">Детали праздника</h2><div class="details-flex"><div class="info-card"><i class="fas fa-calendar-alt"></i><h3>Дата и время</h3><p>07 августа 2026<br>Сбор: 16:30<br>Церемония: 17:00</p></div><div class="info-card"><i class="fas fa-map-marker-alt"></i><h3>Локация</h3><p>Клуб «Белая роща»<br>Лен. обл., д. Рапполово, 15</p></div><div class="info-card"><i class="fas fa-tshirt"></i><h3>Дресс-код</h3><p>Чёрно-белый элегантный стиль</p></div></div></div></section>
+        <section id="programClone"><div class="container fade-up"><h2 class="section-title">Программа дня</h2><div class="program-list"><div class="program-item"><span class="program-time">16:30 – 17:00</span><span>Встреча гостей, аперитив</span></div><div class="program-item"><span class="program-time">17:00 – 17:45</span><span>Церемония</span></div><div class="program-item"><span class="program-time">18:00 – 19:30</span><span>Фуршет, фотосессия</span></div><div class="program-item"><span class="program-time">19:30 – 22:00</span><span>Банкет, тосты, музыка</span></div><div class="program-item"><span class="program-time">22:00 – 23:30</span><span>Танцы, фейерверк</span></div><div class="program-item"><span class="program-time">23:30</span><span>Сладкий стол</span></div></div></div></section>
+        <section><div class="container fade-up"><h2 class="section-title">Как нас найти</h2><div class="map-simple"><i class="fas fa-map-pin" style="font-size:2rem; margin-bottom:0.8rem;"></i><p><strong>Клуб «Белая роща»</strong><br>Всеволожский р-н, д. Рапполово, ул. Центральная, 15</p><p style="margin:0.8rem 0;">🚗 Бесплатная парковка. Трансфер от м. Девяткино.</p><a href="https://maps.google.com/?q=60.0909,30.5239" target="_blank" style="color:#1e1e1e; text-decoration:underline;">Открыть карту →</a></div></div></section>
+        <section id="rsvpClone"><div class="container fade-up"><h2 class="section-title">Подтверждение участия</h2><div class="rsvp-form-card"><form id="rsvpFormClone"><div class="form-group"><input type="text" id="guestFullNameClone" placeholder="Ваши имя и отчество" required></div><div class="form-group"><input type="email" id="guestEmailClone" placeholder="Email для деталей" required></div><div class="form-group"><select id="attendingStatusClone" required><option value="" disabled selected>Вы будете на свадьбе?</option><option value="yes">С радостью приду!</option><option value="plus">Буду с гостем / семьёй</option><option value="no">К сожалению, не смогу</option></select></div><div class="form-group"><textarea rows="3" id="guestWishesClone" placeholder="Пожелания, вопросы..."></textarea></div><button type="submit" class="btn-rsvp" style="width:100%; background:#1a1a1a;">ОТПРАВИТЬ</button><div id="rsvpFeedbackClone" class="feedback"></div></form><p style="font-size:0.75rem; text-align:center; margin-top:1.5rem;">🖤 Подтвердите участие до 1 июля 2026</p></div></div></section>
+        <footer><p>С трепетом ждём встречи, чтобы разделить этот день вместе с вами.</p><p>Ангелина & Яков</p><p style="font-size:0.7rem;">+7 921 123-45-67 | wedding@angelina-yakov.ru</p></footer>
+      </div>
+    `;
+  }
 
-  if (distance < 0) return;
+  function initDynamicFeatures(guestName) {
+    const targetDate = new Date("August 7, 2026 17:00:00").getTime();
+    function updateTimer() {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+      if (distance < 0) {
+        document.getElementById("weeksClone").innerHTML = "00";
+        document.getElementById("daysClone").innerHTML = "00";
+        document.getElementById("hoursClone").innerHTML = "00";
+        document.getElementById("minutesClone").innerHTML = "00";
+        document.getElementById("secondsClone").innerHTML = "00";
+        return;
+      }
+      const totalSec = Math.floor(distance / 1000);
+      const weeks = Math.floor(totalSec / (7*24*3600));
+      const days = Math.floor((totalSec % (7*24*3600)) / (24*3600));
+      const hours = Math.floor((totalSec % (24*3600)) / 3600);
+      const minutes = Math.floor((totalSec % 3600) / 60);
+      const seconds = totalSec % 60;
+      document.getElementById("weeksClone").innerHTML = weeks < 10 ? "0"+weeks : weeks;
+      document.getElementById("daysClone").innerHTML = days < 10 ? "0"+days : days;
+      document.getElementById("hoursClone").innerHTML = hours < 10 ? "0"+hours : hours;
+      document.getElementById("minutesClone").innerHTML = minutes < 10 ? "0"+minutes : minutes;
+      document.getElementById("secondsClone").innerHTML = seconds < 10 ? "0"+seconds : seconds;
+    }
+    updateTimer();
+    setInterval(updateTimer, 1000);
 
-  const total = Math.floor(distance / 1000);
+    const form = document.getElementById('rsvpFormClone');
+    const feedback = document.getElementById('rsvpFeedbackClone');
+    if (form) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = document.getElementById('guestFullNameClone').value.trim();
+        const email = document.getElementById('guestEmailClone').value.trim();
+        const attendance = document.getElementById('attendingStatusClone').value;
+        if (!name || !email || !attendance) {
+          feedback.innerHTML = '<span style="color:#b33;">❌ Заполните все поля</span>';
+          return;
+        }
+        if (!email.includes('@')) {
+          feedback.innerHTML = '<span style="color:#b33;">❌ Некорректный email</span>';
+          return;
+        }
+        const entry = { name, email, attendance, message: document.getElementById('guestWishesClone').value, timestamp: new Date().toISOString() };
+        let all = localStorage.getItem('wedding_rsvp_angelina_yakov');
+        all = all ? JSON.parse(all) : [];
+        all.push(entry);
+        localStorage.setItem('wedding_rsvp_angelina_yakov', JSON.stringify(all));
+        feedback.innerHTML = `<span style="color:#2c5a2e;">🖤 Спасибо, ${name}! Ждём вас. 🖤</span>`;
+        form.reset();
+        if (guestName) document.getElementById('guestFullNameClone').value = guestName;
+        setTimeout(() => feedback.innerHTML = '', 5000);
+      });
+    }
+    if (guestName) {
+      const nameField = document.getElementById('guestFullNameClone');
+      if (nameField) nameField.value = guestName;
+    }
 
-  const weeks = Math.floor(total / (7 * 24 * 3600));
-  const days = Math.floor((total % (7 * 24 * 3600)) / (24 * 3600));
-  const hours = Math.floor((total % (24 * 3600)) / 3600);
-  const minutes = Math.floor((total % 3600) / 60);
-  const seconds = total % 60;
+    const fadeElements = document.querySelectorAll('.fade-up');
+    const checkFade = () => {
+      fadeElements.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 80) el.classList.add('visible');
+      });
+    };
+    window.addEventListener('scroll', checkFade);
+    window.addEventListener('load', checkFade);
 
-  document.getElementById("weeks").innerHTML = weeks;
-  document.getElementById("days").innerHTML = days;
-  document.getElementById("hours").innerHTML = hours;
-  document.getElementById("minutes").innerHTML = minutes;
-  document.getElementById("seconds").innerHTML = seconds;
-}
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const targetId = this.getAttribute('href');
+        if (targetId === "#" || targetId === "") return;
+        const target = document.querySelector(targetId);
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+  }
 
-setInterval(updateTimer, 1000);
-updateTimer();
+  const envelopeOverlay = document.getElementById('envelopeOverlay');
+  const envelope = document.getElementById('envelope');
+
+  function openEnvelopeAndExpand() {
+    envelope.classList.add('open');
+    setTimeout(() => {
+      const paper3d = document.createElement('div');
+      paper3d.className = 'paper-3d';
+      paper3d.innerHTML = getInvitationHTML(guestName);
+      document.body.appendChild(paper3d);
+      envelopeOverlay.classList.add('hide');
+      paper3d.offsetHeight;
+      paper3d.classList.add('unfolded');
+      setTimeout(() => {
+        // После анимации: удаляем классы, но оставляем контент видимым
+        const finalContent = paper3d;
+        finalContent.style.transition = 'none';
+        finalContent.classList.remove('paper-3d', 'unfolded');
+        finalContent.style.transform = 'none';
+        finalContent.style.borderRadius = '0';
+        finalContent.style.boxShadow = 'none';
+        finalContent.style.position = 'relative';
+        finalContent.style.background = '#fffef7';   // сохраняем белый фон
+        finalContent.style.zIndex = 'auto';
+        finalContent.style.overflow = 'visible';
+        finalContent.id = 'finalInvitation';
+        // Принудительно показываем содержимое (на случай, если opacity не сбросился)
+        const invFull = finalContent.querySelector('.invitation-full');
+        if (invFull) invFull.style.opacity = '1';
+        envelopeOverlay.remove();
+        initDynamicFeatures(guestName);
+      }, 1300);
+    }, 400);
+  }
+
+  envelope.addEventListener('click', openEnvelopeAndExpand);
 </script>
-
 </body>
 </html>
