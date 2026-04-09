@@ -7,11 +7,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Karla:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       background: #e8e0d3;
       background-image: radial-gradient(circle at 30% 40%, rgba(0,0,0,0.04) 1.2px, transparent 1.2px);
@@ -21,10 +17,8 @@
     }
     .envelope-overlay {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
       background: #e8e0d3;
       background-image: radial-gradient(circle at 30% 40%, rgba(0,0,0,0.04) 1.2px, transparent 1.2px);
       display: flex;
@@ -33,10 +27,7 @@
       z-index: 3000;
       transition: opacity 0.6s ease, visibility 0.6s ease;
     }
-    .envelope-overlay.hide {
-      opacity: 0;
-      visibility: hidden;
-    }
+    .envelope-overlay.hide { opacity: 0; visibility: hidden; }
     .envelope {
       position: relative;
       width: 360px;
@@ -47,15 +38,11 @@
       cursor: pointer;
       transition: transform 0.2s;
     }
-    .envelope:hover {
-      transform: scale(1.02);
-    }
+    .envelope:hover { transform: scale(1.02); }
     .envelope-flap {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
       background: #cfc0aa;
       clip-path: polygon(0 0, 100% 0, 50% 55%);
       border-radius: 12px 12px 0 0;
@@ -63,16 +50,12 @@
       transform-origin: top;
       z-index: 5;
     }
-    .envelope.open .envelope-flap {
-      transform: rotateX(180deg);
-    }
+    .envelope.open .envelope-flap { transform: rotateX(180deg); }
     .envelope:before {
       content: '';
       position: absolute;
-      top: 50%;
-      left: 0;
-      width: 100%;
-      height: 1px;
+      top: 50%; left: 0;
+      width: 100%; height: 1px;
       background: rgba(0,0,0,0.1);
       z-index: 2;
     }
@@ -95,8 +78,7 @@
       z-index: 3;
       background: linear-gradient(135deg, #fffef7 0%, #fcf5ea 100%);
     }
-    .folded-paper-inside:before,
-    .folded-paper-inside:after {
+    .folded-paper-inside:before, .folded-paper-inside:after {
       content: '';
       position: absolute;
       left: 8%;
@@ -116,10 +98,8 @@
     }
     .paper-3d {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
       background: #fffef7;
       z-index: 3100;
       overflow-y: auto;
@@ -141,15 +121,8 @@
       opacity: 0;
       transition: opacity 0.4s ease 0.6s;
     }
-    .paper-3d.unfolded .invitation-full {
-      opacity: 1;
-    }
-    /* Остальные стили приглашения */
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 24px;
-    }
+    .paper-3d.unfolded .invitation-full { opacity: 1; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
     .hero {
       min-height: 100vh;
       display: flex;
@@ -159,11 +132,7 @@
       background: transparent;
       padding: 40px 20px;
     }
-    .invitation-card {
-      max-width: 1000px;
-      width: 100%;
-      margin: 0 auto;
-    }
+    .invitation-card { max-width: 1000px; width: 100%; margin: 0 auto; }
     .invitation-title {
       font-family: 'Karla', sans-serif;
       font-size: 0.9rem;
@@ -197,11 +166,7 @@
     .initial-wrapper.bottom-line .initial { order: 1; }
     .initial-wrapper.top-line .initial-line { order: 1; }
     .initial-wrapper.top-line .initial { order: 2; }
-    .initial-line {
-      width: 55px;
-      height: 2px;
-      background-color: #1a1a1a;
-    }
+    .initial-line { width: 55px; height: 2px; background-color: #1a1a1a; }
     .initial {
       font-family: 'Playfair Display', serif;
       font-size: 2.8rem;
@@ -385,7 +350,6 @@
       opacity: 1;
       transform: translateY(0);
     }
-    /* кнопка для ручного запуска музыки, если автовоспроизведение заблокировано */
     .music-fallback {
       position: fixed;
       bottom: 20px;
@@ -402,9 +366,7 @@
       box-shadow: 0 2px 10px rgba(0,0,0,0.2);
       display: none;
     }
-    .music-fallback:hover {
-      background: #3a3a3a;
-    }
+    .music-fallback:hover { background: #3a3a3a; }
     @media (max-width: 768px) {
       .names-layout { gap: 25px; }
       .names-photo img { width: 180px; }
@@ -422,13 +384,10 @@
 </head>
 <body>
 
-<!-- Аудиоэлемент с музыкой -->
 <audio id="weddingMusic" loop preload="auto">
   <source src="wedding-music.mp3" type="audio/mpeg">
   Ваш браузер не поддерживает аудио.
 </audio>
-
-<!-- Кнопка для ручного включения (появляется только при ошибке автовоспроизведения) -->
 <button id="musicFallbackBtn" class="music-fallback">🎵 Включить музыку</button>
 
 <div class="envelope-overlay" id="envelopeOverlay">
@@ -586,36 +545,39 @@
     requestAnimationFrame(step);
   }
 
-  // Функция запуска музыки с обработкой ошибок
+  // Запуск музыки (вызывается по клику на конверт)
+  let musicStarted = false;
   function startMusic() {
+    if (musicStarted) return;
+    musicStarted = true;
     const music = document.getElementById('weddingMusic');
     if (!music) return;
-    // Сбрасываем громкость на 0 и запускаем
     music.volume = 0;
     const playPromise = music.play();
     if (playPromise !== undefined) {
       playPromise.then(() => {
-        console.log('Музыка запущена успешно');
+        console.log('Музыка успешно запущена');
         fadeInMusic(music, 0.3, 5000);
-        // Скрываем кнопку-заглушку, если она видна
         const fallbackBtn = document.getElementById('musicFallbackBtn');
         if (fallbackBtn) fallbackBtn.style.display = 'none';
       }).catch(error => {
         console.warn('Автовоспроизведение заблокировано:', error);
-        // Показываем кнопку для ручного включения
         const fallbackBtn = document.getElementById('musicFallbackBtn');
         if (fallbackBtn) fallbackBtn.style.display = 'block';
+        musicStarted = false; // разрешить повторную попытку через кнопку
       });
     }
   }
 
-  // Обработчик для кнопки-заглушки
+  // Кнопка-заглушка
   document.getElementById('musicFallbackBtn').addEventListener('click', () => {
+    if (musicStarted) return;
     const music = document.getElementById('weddingMusic');
     music.volume = 0;
     music.play().then(() => {
       fadeInMusic(music, 0.3, 5000);
       document.getElementById('musicFallbackBtn').style.display = 'none';
+      musicStarted = true;
     }).catch(e => console.log('Ручной запуск не удался', e));
   });
 
@@ -623,7 +585,7 @@
   const envelope = document.getElementById('envelope');
 
   function openEnvelopeAndExpand() {
-    // Запускаем музыку при клике на конверт
+    // Явно запускаем музыку по клику на конверт
     startMusic();
     
     envelope.classList.add('open');
