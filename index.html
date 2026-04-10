@@ -7,15 +7,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Karla:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    html, body {
-      margin: 0;
-      padding: 0;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
     body {
       background: #e8e0d3;
       background-image: radial-gradient(circle at 30% 40%, rgba(0,0,0,0.04) 1.2px, transparent 1.2px);
@@ -26,10 +19,8 @@
     /* КОНВЕРТ (полноэкранный) */
     .envelope-overlay {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
       background: #e8e0d3;
       background-image: radial-gradient(circle at 30% 40%, rgba(0,0,0,0.04) 1.2px, transparent 1.2px);
       display: flex;
@@ -38,10 +29,7 @@
       z-index: 3000;
       transition: opacity 0.6s ease, visibility 0.6s ease;
     }
-    .envelope-overlay.hide {
-      opacity: 0;
-      visibility: hidden;
-    }
+    .envelope-overlay.hide { opacity: 0; visibility: hidden; }
     .envelope {
       position: relative;
       width: 360px;
@@ -52,15 +40,11 @@
       cursor: pointer;
       transition: transform 0.2s;
     }
-    .envelope:hover {
-      transform: scale(1.02);
-    }
+    .envelope:hover { transform: scale(1.02); }
     .envelope-flap {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
       background: #cfc0aa;
       clip-path: polygon(0 0, 100% 0, 50% 55%);
       border-radius: 12px 12px 0 0;
@@ -68,16 +52,12 @@
       transform-origin: top;
       z-index: 5;
     }
-    .envelope.open .envelope-flap {
-      transform: rotateX(180deg);
-    }
+    .envelope.open .envelope-flap { transform: rotateX(180deg); }
     .envelope:before {
       content: '';
       position: absolute;
-      top: 50%;
-      left: 0;
-      width: 100%;
-      height: 1px;
+      top: 50%; left: 0;
+      width: 100%; height: 1px;
       background: rgba(0,0,0,0.1);
       z-index: 2;
     }
@@ -122,10 +102,8 @@
     /* 3D РАЗВОРАЧИВАЮЩИЙСЯ ЛИСТ */
     .paper-3d {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
       background: #fffef7;
       z-index: 3100;
       overflow-y: auto;
@@ -147,10 +125,8 @@
       opacity: 0;
       transition: opacity 0.4s ease 0.6s;
     }
-    .paper-3d.unfolded .invitation-full {
-      opacity: 1;
-    }
-    /* ВЕРХНЕЕ ФОТО (десктоп) */
+    .paper-3d.unfolded .invitation-full { opacity: 1; }
+    /* ВЕРХНЕЕ ФОТО */
     .top-photo {
       text-align: center;
       margin-bottom: 30px;
@@ -167,11 +143,7 @@
       border: 2px solid #f0f0f0;
     }
     /* ОСНОВНЫЕ СТИЛИ */
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 24px;
-    }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
     .hero {
       min-height: auto;
       display: flex;
@@ -181,11 +153,7 @@
       background: transparent;
       padding: 20px 20px 40px;
     }
-    .invitation-card {
-      max-width: 1000px;
-      width: 100%;
-      margin: 0 auto;
-    }
+    .invitation-card { max-width: 1000px; width: 100%; margin: 0 auto; }
     .invitation-title {
       font-family: 'Karla', sans-serif;
       font-size: 0.9rem;
@@ -203,14 +171,11 @@
       max-width: 700px;
       margin: 0 auto 1.5rem auto;
       text-align: center;
-      background: rgba(255, 255, 245, 0.6);
+      background: rgba(255,255,245,0.6);
       padding: 1.2rem;
       border-radius: 32px;
       border-left: 3px solid #b0b0b0;
       border-right: 3px solid #b0b0b0;
-    }
-    .invitation-text p {
-      margin-bottom: 0.5rem;
     }
     .personal-greeting {
       font-family: 'Playfair Display', serif;
@@ -222,7 +187,6 @@
       border-bottom: 1px solid #d4d4d4;
       display: inline-block;
       padding: 0.5rem 1.5rem;
-      letter-spacing: 0.5px;
       background: #fefefe;
     }
     .invite-message {
@@ -259,11 +223,7 @@
     .initial-wrapper.bottom-line .initial { order: 1; }
     .initial-wrapper.top-line .initial-line { order: 1; }
     .initial-wrapper.top-line .initial { order: 2; }
-    .initial-line {
-      width: 55px;
-      height: 2px;
-      background-color: #1a1a1a;
-    }
+    .initial-line { width: 55px; height: 2px; background-color: #1a1a1a; }
     .initial {
       font-family: 'Playfair Display', serif;
       font-size: 2.8rem;
@@ -391,8 +351,6 @@
       gap: 0.5rem;
     }
     .program-time { font-weight: 600; font-family: monospace; }
-    
-    /* Стили для Яндекс.Карты */
     .map-container {
       width: 100%;
       border-radius: 36px;
@@ -412,12 +370,7 @@
       font-size: 0.95rem;
       color: #4a4a4a;
     }
-    .map-address a {
-      color: #1e1e1e;
-      text-decoration: underline;
-      font-weight: 500;
-    }
-    
+    .map-address a { color: #1e1e1e; text-decoration: underline; font-weight: 500; }
     .rsvp-form-card {
       max-width: 680px;
       width: 100%;
@@ -451,11 +404,7 @@
       transform: translateY(20px);
       transition: opacity 0.7s ease, transform 0.7s ease;
     }
-    .fade-up.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    /* Кнопка музыки */
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
     .music-control {
       position: fixed;
       bottom: 25px;
@@ -471,7 +420,6 @@
       z-index: 4000;
       font-family: 'Karla', sans-serif;
       box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-      transition: all 0.2s;
       display: flex;
       align-items: center;
       gap: 8px;
@@ -479,36 +427,12 @@
       visibility: hidden;
       transition: opacity 0.3s, visibility 0.3s;
     }
-    .music-control.show {
-      opacity: 1;
-      visibility: visible;
-    }
-    .music-control:hover {
-      background: #3a3a3a;
-      transform: scale(1.02);
-    }
-    /* Медиа-запросы: убираем пробел сверху на мобильных */
+    .music-control.show { opacity: 1; visibility: visible; }
+    .music-control:hover { background: #3a3a3a; transform: scale(1.02); }
     @media (max-width: 768px) {
-      /* Убираем все отступы у основного контейнера, чтобы фото прилегало к верху */
-      .invitation-full {
-        padding: 0;
-      }
-      .top-photo {
-        padding: 0;
-        margin: 0;
-      }
-      .top-photo img {
-        width: 100%;
-        height: auto;
-        max-width: none;
-        max-height: none;
-        border-radius: 0;
-        box-shadow: none;
-        border: none;
-        display: block;
-        object-fit: cover;
-      }
-      
+      .invitation-full { padding: 0; }
+      .top-photo { padding: 0; margin: 0; }
+      .top-photo img { width: 100%; height: auto; max-width: none; max-height: none; border-radius: 0; box-shadow: none; border: none; display: block; object-fit: cover; }
       .names-layout { gap: 25px; }
       .names-photo img { width: 180px; }
       .initial { font-size: 2rem; }
@@ -534,10 +458,9 @@
 <!-- Аудиоэлемент -->
 <audio id="weddingMusic" loop preload="auto">
   <source src="wedding-music.mp3" type="audio/mpeg">
-  Ваш браузер не поддерживает аудио.
 </audio>
 
-<!-- Кнопка для включения музыки -->
+<!-- Кнопка музыки -->
 <button id="musicControlBtn" class="music-control">
   <i class="fas fa-music"></i> Включить музыку
 </button>
@@ -552,6 +475,11 @@
 </div>
 
 <script>
+  // ======================== НАСТРОЙКА ========================
+  // ВСТАВЬТЕ СЮДА URL ВАШЕГО ВЕБ-ПРИЛОЖЕНИЯ GOOGLE APPS SCRIPT
+  const SCRIPT_URL = 'ВАШ_URL_ВЕБ_ПРИЛОЖЕНИЯ';
+  // ===========================================================
+  
   // Получение имени гостя из URL
   function getGuestNameFromURL() {
     const params = new URLSearchParams(window.location.search);
@@ -561,12 +489,11 @@
   }
   const guestName = getGuestNameFromURL();
 
-  // Генерация HTML приглашения (с Яндекс.Картой)
+  // Генерация HTML приглашения
   function getInvitationHTML(guestName) {
     const greetingText = guestName ? `Уважаемый(ая) ${guestName}!` : `Уважаемые гости!`;
     return `
       <div class="invitation-full">
-        <!-- Верхнее фото -->
         <div class="top-photo">
           <img src="top-photo.jpg" alt="Ангелина и Яков" onerror="this.src='https://placehold.co/1200x600/f0f0f0/8a8a8a?text=Наше+фото'">
         </div>
@@ -605,15 +532,11 @@
         <section id="storyClone"><div class="container fade-up"><h2 class="section-title">Наша история</h2><div style="max-width:700px; margin:0 auto; text-align:center; font-size:1.05rem;"><p>Мы столько раз расставались и снова находили друг друга, проверяя судьбу на прочность, но каждый раз что-то невидимое тянуло нас обратно. Все эти расставания и встречи были лишь проверкой того, как сильно мы нужны друг другу. Все испытания доказали: наши сердца всегда безошибочно находят то единственное место, где им тепло и спокойно. Приглашаем вас разделить день, когда мы говорим судьбе «спасибо»</p></div></div></section>
         <section id="detailsClone"><div class="container fade-up"><h2 class="section-title">Детали праздника</h2><div class="details-flex"><div class="info-card"><i class="fas fa-calendar-alt"></i><h3>Дата и время</h3><p>07 августа 2026<br>Сбор: 16:30<br>Церемония: 17:00</p></div><div class="info-card"><i class="fas fa-map-marker-alt"></i><h3>Локация</h3><p>Церемония:<br>г.Елец, ул.Октябрьская ул., 120 <br>Ресторан:<br>«Мелодия», Липецкая обл., г.Елец, посёлок Строитель, 12б </p></div><div class="info-card"><i class="fas fa-tshirt"></i><h3>Дресс-код</h3><p>Стиль коктейльной вечеринки</p></div></div></div></section>
         <section id="programClone"><div class="container fade-up"><h2 class="section-title">Программа дня</h2><div class="program-list"><div class="program-item"><span class="program-time">16:30 – 17:00</span><span>Встреча гостей, аперитив</span></div><div class="program-item"><span class="program-time">17:00 – 17:45</span><span>Церемония</span></div><div class="program-item"><span class="program-time">18:00 – 19:30</span><span>Фуршет, фотосессия</span></div><div class="program-item"><span class="program-time">19:30 – 22:00</span><span>Банкет, тосты, музыка</span></div><div class="program-item"><span class="program-time">22:00 – 23:30</span><span>Танцы, фейерверк</span></div><div class="program-item"><span class="program-time">23:30</span><span>Сладкий стол</span></div></div></div></section>
-        <!-- Блок "Как нас найти" с Яндекс.Картой (точные координаты) -->
         <section>
           <div class="container fade-up">
             <h2 class="section-title">Как нас найти</h2>
             <div class="map-container">
-              <iframe src="https://yandex.ru/map-widget/v1/?ll=38.478521%2C52.605143&z=18&pt=38.478521,52.605143,pm2rdm&l=map" 
-                      allowfullscreen="true" 
-                      loading="lazy">
-              </iframe>
+              <iframe src="https://yandex.ru/map-widget/v1/?ll=38.478521%2C52.605143&z=18&pt=38.478521,52.605143,pm2rdm&l=map" allowfullscreen="true" loading="lazy"></iframe>
             </div>
             <div class="map-address">
               <p><strong>Ресторан «Мелодия»</strong><br>Липецкая область, г. Елец, посёлок Строитель, 12Б</p>
@@ -622,7 +545,38 @@
             </div>
           </div>
         </section>
-        <section id="rsvpClone"><div class="container fade-up"><h2 class="section-title">Подтверждение участия</h2><div class="rsvp-form-card"><form id="rsvpFormClone"><div class="form-group"><input type="text" id="guestFullNameClone" placeholder="Ваши имя и отчество" required></div><div class="form-group"><input type="email" id="guestEmailClone" placeholder="Email для деталей" required></div><div class="form-group"><select id="attendingStatusClone" required><option value="" disabled selected>Вы будете на свадьбе?</option><option value="yes">С радостью приду!</option><option value="plus">Буду с гостем / семьёй</option><option value="no">К сожалению, не смогу</option></select></div><div class="form-group"><textarea rows="3" id="guestWishesClone" placeholder="Пожелания, вопросы..."></textarea></div><button type="submit" class="btn-rsvp" style="width:100%; background:#1a1a1a;">ОТПРАВИТЬ</button><div id="rsvpFeedbackClone" class="feedback"></div></form><p style="font-size:0.75rem; text-align:center; margin-top:1.5rem;">🖤 Подтвердите участие до 1 июля 2026</p></div></div></section>
+        <section id="rsvpClone">
+          <div class="container fade-up">
+            <h2 class="section-title">Подтверждение участия</h2>
+            <div class="rsvp-form-card">
+              <form id="rsvpFormClone">
+                <div class="form-group">
+                  <input type="text" id="guestFullNameClone" placeholder="Ваши имя и отчество" required>
+                </div>
+                <div class="form-group">
+                  <input type="email" id="guestEmailClone" placeholder="Email для деталей" required>
+                </div>
+                <div class="form-group">
+                  <select id="attendingStatusClone" required>
+                    <option value="" disabled selected>Вы будете на свадьбе?</option>
+                    <option value="yes">С радостью приду!</option>
+                    <option value="plus">Буду с гостем / семьёй</option>
+                    <option value="no">К сожалению, не смогу</option>
+                  </select>
+                </div>
+                <div class="form-group" id="guestsCountGroup" style="display:none;">
+                  <input type="number" id="guestsCountClone" placeholder="Количество гостей (включая вас)" min="1" max="10" value="1">
+                </div>
+                <div class="form-group">
+                  <textarea rows="3" id="guestWishesClone" placeholder="Пожелания, вопросы, особые предпочтения..."></textarea>
+                </div>
+                <button type="submit" class="btn-rsvp" style="width:100%; background:#1a1a1a;">ОТПРАВИТЬ</button>
+                <div id="rsvpFeedbackClone" class="feedback"></div>
+              </form>
+              <p style="font-size:0.75rem; text-align:center; margin-top:1.5rem;">🖤 Подтвердите участие до 1 июля 2026</p>
+            </div>
+          </div>
+        </section>
         <footer><p>С трепетом ждём встречи, чтобы разделить этот день вместе с вами.</p><p>Ангелина & Яков</p><p style="font-size:0.7rem;">+7 921 123-45-67 | wedding@angelina-yakov.ru</p></footer>
       </div>
     `;
@@ -630,6 +584,7 @@
 
   // Инициализация динамики (таймер, форма, анимации)
   function initDynamicFeatures(guestName) {
+    // Таймер
     const targetDate = new Date("August 7, 2026 17:00:00").getTime();
     function updateTimer() {
       const now = new Date().getTime();
@@ -657,38 +612,79 @@
     updateTimer();
     setInterval(updateTimer, 1000);
 
+    // Логика показа/скрытия поля "Количество гостей"
+    const attendingSelect = document.getElementById('attendingStatusClone');
+    const guestsCountGroup = document.getElementById('guestsCountGroup');
+    if (attendingSelect) {
+      attendingSelect.addEventListener('change', function() {
+        if (this.value === 'plus') {
+          guestsCountGroup.style.display = 'block';
+        } else {
+          guestsCountGroup.style.display = 'none';
+        }
+      });
+    }
+
+    // Отправка формы в Google Sheets
     const form = document.getElementById('rsvpFormClone');
     const feedback = document.getElementById('rsvpFeedbackClone');
     if (form) {
-      form.addEventListener('submit', (e) => {
+      form.addEventListener('submit', async (e) => {
         e.preventDefault();
         const name = document.getElementById('guestFullNameClone').value.trim();
         const email = document.getElementById('guestEmailClone').value.trim();
         const attendance = document.getElementById('attendingStatusClone').value;
+        let guestsCount = 1;
+        if (attendance === 'plus') {
+          guestsCount = parseInt(document.getElementById('guestsCountClone').value) || 1;
+        }
+        const message = document.getElementById('guestWishesClone').value;
+
         if (!name || !email || !attendance) {
-          feedback.innerHTML = '<span style="color:#b33;">❌ Заполните все поля</span>';
+          feedback.innerHTML = '<span style="color:#b33;">❌ Заполните имя, email и статус</span>';
           return;
         }
         if (!email.includes('@')) {
-          feedback.innerHTML = '<span style="color:#b33;">❌ Некорректный email</span>';
+          feedback.innerHTML = '<span style="color:#b33;">❌ Введите корректный email</span>';
           return;
         }
-        const entry = { name, email, attendance, message: document.getElementById('guestWishesClone').value, timestamp: new Date().toISOString() };
-        let all = localStorage.getItem('wedding_rsvp_angelina_yakov');
-        all = all ? JSON.parse(all) : [];
-        all.push(entry);
-        localStorage.setItem('wedding_rsvp_angelina_yakov', JSON.stringify(all));
-        feedback.innerHTML = `<span style="color:#2c5a2e;">🖤 Спасибо, ${name}! Ждём вас. 🖤</span>`;
-        form.reset();
-        if (guestName) document.getElementById('guestFullNameClone').value = guestName;
+
+        // Отправка данных в Google Apps Script
+        const payload = {
+          name: name,
+          email: email,
+          attendance: attendance,
+          guestsCount: guestsCount,
+          message: message
+        };
+
+        try {
+          const response = await fetch(SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors', // Для обхода CORS при работе с Apps Script (скрипт всё равно получит данные)
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+          // При mode: 'no-cors' мы не можем прочитать ответ, но запрос уйдёт
+          feedback.innerHTML = `<span style="color:#2c5a2e;">🖤 Спасибо, ${name}! Ваш ответ сохранён. 🖤</span>`;
+          form.reset();
+          if (guestName) document.getElementById('guestFullNameClone').value = guestName;
+          if (attendingSelect) attendingSelect.value = '';
+          guestsCountGroup.style.display = 'none';
+        } catch (error) {
+          console.error('Ошибка отправки:', error);
+          feedback.innerHTML = '<span style="color:#b33;">❌ Ошибка соединения. Попробуйте позже или свяжитесь с нами напрямую.</span>';
+        }
         setTimeout(() => feedback.innerHTML = '', 5000);
       });
     }
+
     if (guestName) {
       const nameField = document.getElementById('guestFullNameClone');
       if (nameField) nameField.value = guestName;
     }
 
+    // Анимация fade-up
     const fadeElements = document.querySelectorAll('.fade-up');
     const checkFade = () => {
       fadeElements.forEach(el => {
@@ -699,6 +695,7 @@
     window.addEventListener('scroll', checkFade);
     window.addEventListener('load', checkFade);
 
+    // Плавная прокрутка
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function(e) {
         const targetId = this.getAttribute('href');
@@ -712,7 +709,7 @@
     });
   }
 
-  // Плавное увеличение громкости до 0.3 за 5 секунд
+  // Музыка
   function fadeInMusic(audioElement, targetVolume = 0.3, duration = 5000) {
     if (!audioElement) return;
     audioElement.volume = 0;
@@ -721,29 +718,23 @@
       const elapsed = now - startTime;
       const progress = Math.min(1, elapsed / duration);
       audioElement.volume = progress * targetVolume;
-      if (progress < 1) {
-        requestAnimationFrame(step);
-      }
+      if (progress < 1) requestAnimationFrame(step);
     }
     requestAnimationFrame(step);
   }
 
-  // Запуск музыки (вызывается по кнопке)
   function startMusic() {
     const music = document.getElementById('weddingMusic');
-    if (!music) return;
-    if (!music.paused) return;
+    if (!music || !music.paused) return;
     music.volume = 0;
     music.play().then(() => {
       fadeInMusic(music, 0.3, 5000);
       const btn = document.getElementById('musicControlBtn');
       if (btn) btn.classList.remove('show');
-    }).catch(e => {
-      console.warn('Не удалось запустить музыку:', e);
-    });
+    }).catch(e => console.warn('Музыка не запустилась:', e));
   }
 
-  // Открытие конверта и разворачивание листа
+  // Открытие конверта
   const envelopeOverlay = document.getElementById('envelopeOverlay');
   const envelope = document.getElementById('envelope');
   const musicControlBtn = document.getElementById('musicControlBtn');
