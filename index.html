@@ -476,10 +476,10 @@
 
 <script>
   // ======================== НАСТРОЙКА ========================
-  // ВСТАВЬТЕ СЮДА URL ВАШЕГО ВЕБ-ПРИЛОЖЕНИЯ GOOGLE APPS SCRIPT
-  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby-0u1l-RrpctkCA-ltmCf-Ez2BWC20RxdpAmlKvlF_m7MbBzkmRrogmb3pyULxa6Ps/exec';
+  // ВАША ССЫЛКА НА ВЕБ-ПРИЛОЖЕНИЕ GOOGLE APPS SCRIPT
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby1bNoY0qBfXyz-eOhqMHuBEnLUULoDy98KawBEaDuwe3_H5XNUWBYFZpxp20nC_u-y/exec';
   // ===========================================================
-  
+
   // Получение имени гостя из URL
   function getGuestNameFromURL() {
     const params = new URLSearchParams(window.location.search);
@@ -612,20 +612,16 @@
     updateTimer();
     setInterval(updateTimer, 1000);
 
-    // Логика показа/скрытия поля "Количество гостей"
+    // Поле "Количество гостей"
     const attendingSelect = document.getElementById('attendingStatusClone');
     const guestsCountGroup = document.getElementById('guestsCountGroup');
     if (attendingSelect) {
       attendingSelect.addEventListener('change', function() {
-        if (this.value === 'plus') {
-          guestsCountGroup.style.display = 'block';
-        } else {
-          guestsCountGroup.style.display = 'none';
-        }
+        guestsCountGroup.style.display = this.value === 'plus' ? 'block' : 'none';
       });
     }
 
-    // Отправка формы в Google Sheets
+    // Отправка формы в Google Таблицу
     const form = document.getElementById('rsvpFormClone');
     const feedback = document.getElementById('rsvpFeedbackClone');
     if (form) {
@@ -636,7 +632,8 @@
         const attendance = document.getElementById('attendingStatusClone').value;
         let guestsCount = 1;
         if (attendance === 'plus') {
-          guestsCount = parseInt(document.getElementById('guestsCountClone').value) || 1;
+          const guestsInput = document.getElementById('guestsCountClone');
+          guestsCount = guestsInput ? parseInt(guestsInput.value) || 1 : 1;
         }
         const message = document.getElementById('guestWishesClone').value;
 
@@ -649,28 +646,31 @@
           return;
         }
 
-        // Отправка данных в Google Apps Script
-        const payload = {
-          name: name,
-          email: email,
-          attendance: attendance,
-          guestsCount: guestsCount,
-          message: message
-        };
+        feedback.innerHTML = '<span style="color:#555;">⏳ Отправка...</span>';
 
         try {
           const response = await fetch(SCRIPT_URL, {
             method: 'POST',
-            mode: 'no-cors', // Для обхода CORS при работе с Apps Script (скрипт всё равно получит данные)
+            mode: 'cors',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
+            body: JSON.stringify({
+              name: name,
+              email: email,
+              attendance: attendance,
+              guestsCount: guestsCount,
+              message: message
+            })
           });
-          // При mode: 'no-cors' мы не можем прочитать ответ, но запрос уйдёт
-          feedback.innerHTML = `<span style="color:#2c5a2e;">🖤 Спасибо, ${name}! Ваш ответ сохранён. 🖤</span>`;
-          form.reset();
-          if (guestName) document.getElementById('guestFullNameClone').value = guestName;
-          if (attendingSelect) attendingSelect.value = '';
-          guestsCountGroup.style.display = 'none';
+          const result = await response.json();
+          if (result.result === 'success') {
+            feedback.innerHTML = `<span style="color:#2c5a2e;">🖤 Спасибо, ${name}! Ваш ответ сохранён. 🖤</span>`;
+            form.reset();
+            if (guestName) document.getElementById('guestFullNameClone').value = guestName;
+            attendingSelect.value = '';
+            guestsCountGroup.style.display = 'none';
+          } else {
+            throw new Error(result.error || 'Неизвестная ошибка');
+          }
         } catch (error) {
           console.error('Ошибка отправки:', error);
           feedback.innerHTML = '<span style="color:#b33;">❌ Ошибка соединения. Попробуйте позже или свяжитесь с нами напрямую.</span>';
